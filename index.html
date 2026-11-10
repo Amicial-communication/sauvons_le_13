@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Enquêtes aidants 13</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Poppins:wght@500;600&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Mise en page : une salle de séance. Barre de séance en haut, diapositive au centre, carnet de notes à droite.
+   Couleurs de la charte Amicial : bleu clair = aidants, bleu Oregon = aide à domicile (salariés), vert fougère = coopération (coordinateurs). */
+:root{
+  --bg:#F2F5F7; --surface:#FFFFFF; --surface-2:#E9F1F3; --ink:#1D2833; --muted:#536273; --line:#D2DCE4;
+  --brand:#3E5A7F; --brand-ink:#3E5A7F; --on-brand:#FFFFFF;
+  --aidants:#C7E0E4; --aidants-ink:#21414B;
+  --salaries:#3E5A7F; --salaries-ink:#FFFFFF;
+  --coordos:#568259; --coordos-ink:#FFFFFF;
+  --accent:#F29559; --on-accent:#2B1A0D;
+  --bone:#E3DBC8; --bone-ink:#3B3324;
+  --ok:#3E7A4A; --warn:#A9581A; --wait:#66737F;
+  --focus:#F29559;
+  --f-display:"Open Sans", "Segoe UI", system-ui, sans-serif;
+  --f-sub:"Poppins", "Open Sans", system-ui, sans-serif;
+  --f-body:"PT Serif", Georgia, "Times New Roman", serif;
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101820; --surface:#17212C; --surface-2:#1D2E37; --ink:#E5EBF1; --muted:#9AA9B8; --line:#2B3A49;
+    --brand:#4F709A; --brand-ink:#A3C0E2; --on-brand:#FFFFFF;
+    --aidants:#28454E; --aidants-ink:#D3E8EC;
+    --salaries:#3E5A7F; --salaries-ink:#FFFFFF;
+    --coordos:#4D7650; --coordos-ink:#FFFFFF;
+    --accent:#F29559; --on-accent:#2B1A0D;
+    --bone:#39342A; --bone-ink:#EDE5D3;
+    --ok:#7DBE88; --warn:#EDA867; --wait:#A2AEBA;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101820; --surface:#17212C; --surface-2:#1D2E37; --ink:#E5EBF1; --muted:#9AA9B8; --line:#2B3A49;
+  --brand:#4F709A; --brand-ink:#A3C0E2; --on-brand:#FFFFFF;
+  --aidants:#28454E; --aidants-ink:#D3E8EC;
+  --salaries:#3E5A7F; --salaries-ink:#FFFFFF;
+  --coordos:#4D7650; --coordos-ink:#FFFFFF;
+  --accent:#F29559; --on-accent:#2B1A0D;
+  --bone:#39342A; --bone-ink:#EDE5D3;
+  --ok:#7DBE88; --warn:#EDA867; --wait:#A2AEBA;
+  color-scheme: dark;
+}
+
+html,body{height:100%}
+html{overflow:hidden}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.55;
+  display:grid; grid-template-rows:auto minmax(0,1fr) auto; grid-template-columns:minmax(0,1fr); overflow:hidden}
+body > *{min-width:0}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+button,input,textarea{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--f-display); text-wrap:balance; margin:0; color:var(--ink)}
+p{margin:0}
+.gutter{padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+
+/* Barre de séance : toujours blanche, le logo Amicial se pose sur fond blanc (charte) */
+.topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding-block:9px;
+  border-bottom:1px solid #D2DCE4; background:#FFFFFF; color:#1D2833}
+.topbar .brandline{display:flex; align-items:center; gap:14px; min-width:0}
+.topbar .logo{height:30px; width:auto; display:block; flex:none}
+.topbar .sep{width:1px; height:24px; background:#D2DCE4; flex:none}
+.topbar .who{font-family:var(--f-sub); font-weight:600; font-size:.92rem; color:#3E5A7F; white-space:nowrap}
+.topbar .where{font-family:var(--f-sub); font-weight:500; font-size:.78rem; letter-spacing:.08em; color:#536273; white-space:nowrap;
+  border:1px solid #D2DCE4; border-radius:999px; padding:2px 9px}
+.topbar .tools{display:flex; gap:8px; flex:none}
+.topbar .btn{background:#FFFFFF; color:#1D2833; border-color:#D2DCE4}
+.topbar .btn:hover{border-color:#3E5A7F}
+@media (max-width:480px){
+  .topbar .brandline{gap:9px}
+  .topbar .logo{height:24px}
+  .topbar .sep{display:none}
+  .topbar .who{font-size:.85rem}
+}
+
+.btn{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+  border-radius:999px; padding:8px 14px; font-family:var(--f-sub); font-weight:500; font-size:.9rem; cursor:pointer; min-height:40px}
+.btn:hover{border-color:var(--brand-ink)}
+.btn[disabled]{opacity:.45; cursor:default}
+.btn.primary{background:var(--brand); border-color:var(--brand); color:var(--on-brand)}
+.btn.accent{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.btn.small{min-height:32px; padding:4px 11px; font-size:.8rem}
+.btn svg{width:18px; height:18px; flex:none}
+.btn .count{background:var(--accent); color:var(--on-accent); border-radius:999px; padding:0 7px; font-size:.75rem; font-weight:600}
+
+/* Espace de travail */
+.workspace{display:grid; grid-template-columns:minmax(0,1fr); min-height:0}
+body.notes-open .workspace{grid-template-columns:minmax(0,1fr) 380px}
+#stage{overflow-y:auto; overflow-x:hidden; min-height:0; min-width:0; scroll-behavior:smooth}
+.workspace > *{min-width:0}
+.slide{min-width:0}
+@media (prefers-reduced-motion: reduce){ #stage{scroll-behavior:auto} }
+.slide{display:none; max-width:1160px; margin:0 auto; padding-block:28px 48px}
+.slide.active{display:block}
+.slide > * + *{margin-top:22px}
+
+.eyebrow{font-family:var(--f-sub); font-weight:600; font-size:.78rem; letter-spacing:.09em; text-transform:uppercase; color:var(--brand-ink)}
+.slide h2{font-size:clamp(1.6rem, 2.8vw, 2.35rem); font-weight:800; line-height:1.15}
+.lead{font-size:clamp(1.05rem, 1.5vw, 1.25rem); max-width:62ch; color:var(--ink)}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+.grid{display:grid; gap:16px}
+.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+.cols-3{grid-template-columns:repeat(3, minmax(0,1fr))}
+@media (max-width:900px){ .cols-2,.cols-3{grid-template-columns:minmax(0,1fr)} }
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; min-width:0}
+.card h3{font-size:1.1rem; font-weight:700; margin-bottom:8px}
+.card ul{margin:0; padding-left:1.1em}
+.card li + li{margin-top:6px}
+.key{font-family:var(--f-display); font-weight:800}
+.tag{display:inline-block; font-family:var(--f-sub); font-size:.75rem; font-weight:600; padding:2px 9px; border-radius:999px; background:var(--surface-2); color:var(--ink); white-space:nowrap}
+
+/* Couverture */
+.cover{padding-block:7vh 32px}
+.cover h1{font-size:clamp(2.4rem, 6vw, 4.4rem); font-weight:800; line-height:1.05; letter-spacing:-.01em; max-width:14ch}
+.cover h1 span{color:var(--brand-ink)}
+.cover .lead{margin-top:20px}
+.cover-meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px}
+.trio{display:flex; gap:10px; margin-top:34px; flex-wrap:wrap}
+.trio .pill{font-family:var(--f-sub); font-weight:600; font-size:.9rem; padding:10px 16px; border-radius:10px}
+.pill.aid{background:var(--aidants); color:var(--aidants-ink)}
+.pill.sal{background:var(--salaries); color:var(--salaries-ink)}
+.pill.coo{background:var(--coordos); color:var(--coordos-ink)}
+.hint{margin-top:34px; font-family:var(--f-sub); font-size:.85rem; color:var(--muted)}
+
+/* Pourquoi */
+.reasons{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px}
+@media (max-width:900px){ .reasons{grid-template-columns:minmax(0,1fr)} }
+.reason{border-top:3px solid var(--brand); padding-top:14px}
+.reason .num{font-family:var(--f-display); font-weight:800; font-size:2rem; color:var(--brand-ink); line-height:1}
+.reason h3{font-size:1.15rem; margin:8px 0 6px}
+
+/* Dispositif */
+.survey-card{padding:0; overflow:hidden; display:flex; flex-direction:column}
+.survey-card .head{padding:16px 20px}
+.survey-card .head h3{margin:0; color:inherit}
+.survey-card .head .tag{background:rgba(255,255,255,.22); color:inherit}
+.survey-card .body{padding:16px 20px; display:grid; gap:10px}
+.head.aid{background:var(--aidants); color:var(--aidants-ink)}
+.head.sal{background:var(--salaries); color:var(--salaries-ink)}
+.head.coo{background:var(--coordos); color:var(--coordos-ink)}
+.facts{display:grid; grid-template-columns:auto minmax(0,1fr); gap:6px 12px; font-size:.95rem}
+.facts dt{font-family:var(--f-sub); font-size:.78rem; font-weight:600; color:var(--muted); padding-top:2px}
+.facts dd{margin:0}
+.strip{background:var(--bone); color:var(--bone-ink); border-radius:var(--radius); padding:14px 18px}
+
+/* Questionnaires */
+.survey-top{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px}
+.seg{display:inline-flex; background:var(--surface-2); border-radius:999px; padding:4px; gap:4px}
+.seg button{border:0; background:transparent; border-radius:999px; padding:7px 14px; font-family:var(--f-sub); font-weight:500; font-size:.88rem; cursor:pointer; color:var(--ink); min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--surface); box-shadow:0 1px 3px rgba(0,0,0,.12); font-weight:600}
+.player{display:grid; grid-template-columns:minmax(0, 720px) minmax(0,1fr); gap:20px; align-items:start}
+@media (max-width:1000px){ .player{grid-template-columns:minmax(0,1fr)} }
+.qcard{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+.qcard .qhead{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 18px; font-family:var(--f-sub); font-size:.82rem; font-weight:600}
+.qhead.aid{background:var(--aidants); color:var(--aidants-ink)}
+.qhead.sal{background:var(--salaries); color:var(--salaries-ink)}
+.qhead.coo{background:var(--coordos); color:var(--coordos-ink)}
+.progress{height:4px; background:var(--surface-2)}
+.progress i{display:block; height:100%; background:var(--accent); width:0; transition:width .25s}
+@media (prefers-reduced-motion: reduce){ .progress i{transition:none} }
+.qbody{padding:20px 22px 22px; display:grid; gap:14px}
+.qbody h3{font-family:var(--f-display); font-size:1.2rem; font-weight:700; line-height:1.35}
+.qbody .cond{font-family:var(--f-sub); font-size:.78rem; font-weight:600; color:var(--brand-ink)}
+.qbody .help{font-size:.9rem; color:var(--muted)}
+.opts{display:grid; gap:8px}
+.opt{display:flex; align-items:flex-start; gap:10px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; cursor:pointer; background:var(--surface)}
+.opt:hover{border-color:var(--brand-ink)}
+.opt:has(input:checked){border-color:var(--brand-ink); background:var(--surface-2)}
+.opt:has(input:disabled){opacity:.5; cursor:default}
+.opt input{margin-top:4px; accent-color:var(--brand); flex:none; width:18px; height:18px}
+.opt span{min-width:0}
+textarea.answer{width:100%; min-height:92px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:var(--surface); resize:vertical}
+input.answer{width:100%; max-width:220px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:var(--surface)}
+.qactions{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; align-items:center}
+.qactions .left,.qactions .right{display:flex; gap:8px; flex-wrap:wrap}
+.err{color:var(--warn); font-family:var(--f-sub); font-size:.85rem}
+.branch{font-family:var(--f-sub); font-size:.78rem; color:var(--warn); font-weight:600}
+.side-note{display:grid; gap:12px}
+.side-note .card{font-size:.95rem}
+.intro-text{display:grid; gap:10px; font-size:1rem}
+.overview{display:grid; gap:10px}
+.ov-sec{font-family:var(--f-sub); font-weight:600; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-top:10px}
+.ov-item{display:grid; grid-template-columns:52px minmax(0,1fr) auto; gap:12px; align-items:start; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px}
+@media (max-width:640px){ .ov-item{grid-template-columns:44px minmax(0,1fr)} .ov-item .btn{grid-column:2} }
+.ov-n{font-family:var(--f-display); font-weight:800; font-size:1.05rem; color:var(--brand-ink); font-variant-numeric:tabular-nums}
+.ov-q{font-weight:700; font-family:var(--f-display); font-size:.98rem; line-height:1.4}
+.ov-opts{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.ov-opts .tag{white-space:normal; font-weight:500; font-family:var(--f-body); font-size:.82rem}
+.ov-meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:center}
+
+/* Diffusion */
+.table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.93rem}
+th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-family:var(--f-sub); font-size:.78rem; font-weight:600; color:var(--muted); background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.num{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--f-display); font-weight:700}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{background:var(--surface-2); border-radius:8px; padding:7px 11px; font-size:.9rem}
+.timeline{display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:0; position:relative; margin-top:8px}
+.timeline::before{content:""; position:absolute; left:0; right:0; top:9px; height:2px; background:var(--line)}
+.tl{position:relative; padding:28px 8px 0 0}
+.tl::before{content:""; position:absolute; top:2px; left:0; width:16px; height:16px; border-radius:50%; background:var(--surface); border:3px solid var(--brand)}
+.tl.key-step::before{background:var(--accent); border-color:var(--accent)}
+.tl .d{font-family:var(--f-display); font-weight:800; font-variant-numeric:tabular-nums; font-size:.95rem}
+.tl .l{font-size:.88rem; color:var(--muted); margin-top:2px}
+@media (max-width:900px){
+  .timeline{grid-template-columns:minmax(0,1fr); padding-left:26px}
+  .timeline::before{left:7px; right:auto; top:0; bottom:0; width:2px; height:auto}
+  .tl{padding:0 0 16px 0}
+  .tl::before{left:-26px; top:3px}
+}
+
+/* Croisements */
+.matrix th:first-child,.matrix td:first-child{min-width:190px}
+.matrix td .q{display:inline-block; font-family:var(--f-display); font-weight:700; font-size:.82rem; padding:2px 8px; border-radius:6px; margin:2px 4px 2px 0; font-variant-numeric:tabular-nums}
+.q.aid{background:var(--aidants); color:var(--aidants-ink)}
+.q.sal{background:var(--salaries); color:var(--salaries-ink)}
+.q.coo{background:var(--coordos); color:var(--coordos-ink)}
+.matrix td.none{color:var(--muted)}
+.matrix th.aid{background:var(--aidants); color:var(--aidants-ink)}
+.matrix th.sal{background:var(--salaries); color:var(--salaries-ink)}
+.matrix th.coo{background:var(--coordos); color:var(--coordos-ink)}
+
+/* Données */
+.group h3{display:flex; align-items:center; gap:8px}
+.missing li{color:var(--muted)}
+.missing li strong{color:var(--ink)}
+
+/* Entretiens avec les personnes aidées */
+.format{display:grid; gap:8px; align-content:start}
+.format .tag{justify-self:start; background:var(--aidants); color:var(--aidants-ink)}
+.format h3{margin:0}
+.format p{font-size:.95rem}
+.guide-top{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 14px}
+.guide-top h3{margin:0}
+.guide{display:grid; gap:8px; margin-top:14px}
+.guide details{border:1px solid var(--line); border-radius:10px; background:var(--bg)}
+.guide details[open]{background:var(--surface); border-color:var(--brand-ink)}
+.guide summary{display:grid; grid-template-columns:86px minmax(0,1fr) 20px; gap:12px; align-items:center; padding:12px 14px; cursor:pointer; list-style:none; min-height:48px}
+.guide summary::-webkit-details-marker{display:none}
+.guide .gn{font-family:var(--f-sub); font-weight:600; font-size:.75rem; color:var(--brand-ink); font-variant-numeric:tabular-nums; text-transform:uppercase; letter-spacing:.05em}
+.guide .gq{font-family:var(--f-display); font-weight:700; line-height:1.4}
+.guide .chev{width:18px; height:18px; color:var(--muted); transition:transform .2s}
+.guide details[open] .chev{transform:rotate(180deg)}
+@media (prefers-reduced-motion: reduce){ .guide .chev{transition:none} }
+.guide .gbody{padding:0 14px 14px 112px; display:grid; gap:10px; font-size:.95rem}
+@media (max-width:640px){ .guide summary{grid-template-columns:minmax(0,1fr) 20px; gap:4px 12px} .guide .gn{grid-column:1} .guide .gq{grid-column:1} .guide .chev{grid-column:2; grid-row:1 / span 2} .guide .gbody{padding-left:14px} }
+.guide .lab{font-family:var(--f-sub); font-size:.74rem; font-weight:600; color:var(--muted); display:block; margin-bottom:2px}
+.guide .gbody .btn{justify-self:start}
+
+/* Profil recherché */
+.profile-wrap{display:grid; grid-template-columns:minmax(0,230px) minmax(0,1fr) minmax(0,1.15fr); gap:24px; align-items:start}
+@media (max-width:1050px){ .profile-wrap{grid-template-columns:minmax(0,200px) minmax(0,1fr)} .profile-wrap .detail{grid-column:1 / -1} }
+@media (max-width:620px){ .profile-wrap{grid-template-columns:minmax(0,1fr)} .figure{max-width:190px; margin:0 auto; width:100%} }
+.figure svg{width:100%; height:auto; display:block; overflow:visible}
+.band{cursor:pointer; transition:opacity .2s}
+.figure.has-sel .band:not(.on), .figure.has-sel .band-lbl:not(.on){opacity:.3}
+.band-lbl{transition:opacity .2s}
+@media (prefers-reduced-motion: reduce){ .band{transition:none} }
+.band-lbl{font-family:var(--f-display); font-weight:800; font-size:15px; pointer-events:none; font-variant-numeric:tabular-nums}
+.silhouette-line{fill:none; stroke:var(--ink); stroke-opacity:.25; stroke-width:1.5}
+.legend{display:grid; gap:6px}
+.legend button{display:grid; grid-template-columns:14px minmax(0,1fr) auto; gap:10px; align-items:center; text-align:left; width:100%;
+  border:1px solid var(--line); background:var(--surface); border-radius:10px; padding:8px 12px; cursor:pointer; color:var(--ink);
+  font-family:var(--f-sub); font-size:.86rem; font-weight:500; line-height:1.3; min-height:44px}
+.legend button:hover{border-color:var(--brand-ink)}
+.legend button[aria-pressed="true"]{border-color:var(--brand-ink); background:var(--surface-2); font-weight:600}
+.legend .sw{width:14px; height:14px; border-radius:4px; box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.legend .pc{font-family:var(--f-display); font-weight:800; font-variant-numeric:tabular-nums; color:var(--muted)}
+.detail{display:grid; gap:12px; align-content:start; min-height:100%}
+.detail .big{display:flex; align-items:baseline; gap:12px}
+.detail .pc-big{font-family:var(--f-display); font-weight:800; font-size:2.6rem; line-height:1; color:var(--brand-ink); font-variant-numeric:tabular-nums}
+.detail .kicker{font-family:var(--f-sub); font-weight:600; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.detail h3{font-size:1.2rem; margin:0}
+.detail .how{background:var(--surface-2); border-radius:10px; padding:12px 14px; font-size:.95rem}
+.detail .how b{font-family:var(--f-sub); font-size:.74rem; font-weight:600; color:var(--muted); display:block; margin-bottom:2px}
+.detail .btn{justify-self:start}
+.where-list .chip{font-size:.88rem}
+
+/* Décisions */
+.decisions{display:grid; gap:10px}
+.decision{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px 16px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px}
+@media (max-width:760px){ .decision{grid-template-columns:minmax(0,1fr)} }
+.decision h3{font-size:1.02rem; font-weight:700}
+.decision .by{font-family:var(--f-sub); font-size:.78rem; color:var(--muted); margin-top:4px}
+.status{display:flex; flex-wrap:wrap; gap:6px}
+.status button{border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:5px 12px; font-family:var(--f-sub); font-size:.8rem; font-weight:500; cursor:pointer; min-height:34px; color:var(--ink)}
+.status button[aria-pressed="true"][data-s="valide"]{background:var(--ok); border-color:var(--ok); color:var(--surface)}
+.status button[aria-pressed="true"][data-s="a-revoir"]{background:var(--warn); border-color:var(--warn); color:var(--surface)}
+.status button[aria-pressed="true"][data-s="en-attente"]{background:var(--wait); border-color:var(--wait); color:var(--surface)}
+
+/* Carnet de notes */
+#notes{background:var(--surface); border-left:1px solid var(--line); display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; min-height:0}
+@media (max-width:1100px){
+  body.notes-open .workspace{grid-template-columns:minmax(0,1fr)}
+  #notes{position:fixed; left:0; right:0; bottom:0; height:min(72vh, 620px); border-left:0; border-top:1px solid var(--line);
+    box-shadow:0 -8px 30px rgba(0,0,0,.18); z-index:20; border-radius:16px 16px 0 0;
+    padding-bottom:env(safe-area-inset-bottom, 0px)}
+}
+.notes-head{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:14px 16px 8px}
+.notes-head h2{font-size:1.05rem; font-weight:800}
+.icon-btn{border:0; background:transparent; width:40px; height:40px; border-radius:50%; cursor:pointer; display:grid; place-items:center; color:var(--ink)}
+.icon-btn:hover{background:var(--surface-2)}
+.icon-btn svg{width:20px; height:20px}
+.notes-filter{padding:0 16px 8px; display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap}
+.notes-list{overflow-y:auto; padding:6px 16px; display:grid; gap:10px; align-content:start; min-height:0}
+.note{border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:var(--bg)}
+.note.done{opacity:.6}
+.note .meta{display:flex; flex-wrap:wrap; gap:6px 10px; align-items:center; font-family:var(--f-sub); font-size:.75rem; color:var(--muted)}
+.note .meta .author{font-weight:600; color:var(--ink)}
+.note .ctx{font-family:var(--f-sub); font-size:.75rem; font-weight:600; color:var(--brand-ink); margin-top:4px}
+.note .text{margin-top:6px; white-space:pre-wrap; overflow-wrap:anywhere; font-size:.95rem}
+.note .acts{display:flex; gap:6px; margin-top:8px; flex-wrap:wrap}
+.empty{color:var(--muted); font-size:.92rem; padding:8px 0}
+.composer{border-top:1px solid var(--line); padding:12px 16px 14px; display:grid; gap:8px}
+.ctx-chip{display:flex; align-items:center; justify-content:space-between; gap:6px; font-family:var(--f-sub); font-size:.78rem; background:var(--surface-2); border-radius:8px; padding:4px 4px 4px 10px; min-height:32px}
+.ctx-chip button{border:0; background:transparent; cursor:pointer; font-size:.78rem; color:var(--brand-ink); padding:4px 8px; border-radius:6px; font-family:var(--f-sub)}
+.composer textarea{width:100%; min-height:78px; border:1px solid var(--line); border-radius:10px; padding:9px 11px; background:var(--surface); resize:vertical}
+.composer .row{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap}
+.notes-status{font-family:var(--f-sub); font-size:.75rem; color:var(--muted)}
+
+/* Récapitulatif */
+.recap-group h3{font-size:1rem; margin-bottom:8px}
+.recap-group + .recap-group{margin-top:16px}
+.copy-fallback{width:100%; min-height:160px; border:1px solid var(--line); border-radius:10px; padding:10px; background:var(--surface)}
+
+/* Pied */
+.footbar{display:flex; align-items:center; justify-content:space-between; gap:10px; padding-block:10px;
+  padding-bottom:max(10px, env(safe-area-inset-bottom, 0px)); border-top:1px solid var(--line); background:var(--surface)}
+.footbar .nav{display:flex; align-items:center; gap:8px}
+#counter{font-family:var(--f-display); font-weight:700; font-variant-numeric:tabular-nums; min-width:62px; text-align:center}
+.dots{display:flex; gap:5px; flex-wrap:wrap; justify-content:center; min-width:0}
+.dots button{width:10px; height:10px; border-radius:50%; border:0; padding:0; background:var(--line); cursor:pointer}
+.dots button[aria-current="true"]{background:var(--brand); width:22px; border-radius:6px}
+@media (max-width:640px){ .dots{display:none} .btn .lbl{display:none} }
+</style>
+</head>
+<body>
+<header class="topbar gutter">
+  <div class="brandline">
+    <img class="logo" src="data:image/png;base64,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" alt="Amicial" width="124" height="30">
+    <span class="sep" aria-hidden="true"></span>
+    <span class="who">Sauvons le 13</span>
+    <span class="where">CODIR</span>
+  </div>
+  <div class="tools">
+    <button class="btn small" id="fs" type="button" aria-label="Plein écran">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      <span class="lbl">Plein écran</span>
+    </button>
+  </div>
+</header>
+
+<div class="workspace">
+<main id="stage" class="gutter" tabindex="-1">
+
+<!-- 1 -->
+<section class="slide cover active" id="accueil" data-title="Accueil">
+  <div class="eyebrow">CODIR · Novembre 2026</div>
+  <h1>Écouter <span>avant</span> de construire</h1>
+  <p class="lead">Trois enquêtes pour connaître les besoins des aidants du 13, ce que le terrain observe, et les talents sur lesquels bâtir une offre plus complète.</p>
+  <div class="cover-meta">
+    <span class="tag">Marseille et Arles</span>
+    <span class="tag">Lancement le 16 novembre</span>
+    <span class="tag">Restitution la semaine du 7 décembre</span>
+  </div>
+  <div class="trio" aria-label="Les trois enquêtes">
+    <span class="pill aid">Aidants et aidés</span>
+    <span class="pill sal">Salariés</span>
+    <span class="pill coo">Coordinateurs de parcours</span>
+  </div>
+  <p class="hint">Flèches du clavier ou boutons du bas pour naviguer. Le bouton « Notes » ouvre le carnet de séance, partagé entre les participants.</p>
+</section>
+
+<!-- 2 -->
+<section class="slide" id="pourquoi" data-title="Pourquoi ces enquêtes">
+  <div class="eyebrow">Le contexte</div>
+  <h2>Pourquoi ces enquêtes, maintenant</h2>
+  <div class="reasons">
+    <div class="reason">
+      <div class="num">1</div>
+      <h3>De nouvelles recettes, sans s'éloigner de la mission</h3>
+      <p>Une offre plus complète doit partir de besoins vérifiés : quels besoins restent sans réponse, chez qui, à quel prix.</p>
+    </div>
+    <div class="reason">
+      <div class="num">2</div>
+      <h3>Trois regards sur les mêmes besoins</h3>
+      <p>Les familles disent ce qu'elles vivent, les intervenantes ce qu'elles observent au domicile, les coordinateurs ce qu'ils reçoivent et ne peuvent pas servir.</p>
+    </div>
+    <div class="reason">
+      <div class="num">3</div>
+      <h3>Un chargé de développement en janvier</h3>
+      <p>La restitution de décembre devient son point de départ : segments prioritaires, arguments, prescripteurs à rencontrer.</p>
+    </div>
+  </div>
+  <div class="strip"><strong>Ce que les enquêtes ne font pas :</strong> trancher à la place du CODIR. Elles éclairent l'option « développer une offre », et apportent des preuves pour la candidature à la dotation complémentaire.</div>
+</section>
+
+<!-- 3 -->
+<section class="slide" id="dispositif" data-title="Le dispositif">
+  <div class="eyebrow">Le dispositif</div>
+  <h2>Trois questionnaires, un même langage</h2>
+  <p class="lead">Les listes de besoins sont communes aux trois enquêtes : elles se dépouillent ensemble.</p>
+  <div class="grid cols-3">
+    <article class="card survey-card">
+      <div class="head aid"><h3>Aidants et aidés</h3></div>
+      <div class="body">
+        <dl class="facts">
+          <dt>Public</dt><dd>Proches aidants des Bouches-du-Rhône, clients d'Amicial ou non</dd>
+          <dt>Format</dt><dd><span class="key">39</span> questions, 10 à 12 min, Forms sur amicial.fr</dd>
+          <dt>Anonymat</dt><dd>Anonyme ; volontaires pour un entretien via un formulaire séparé</dd>
+          <dt>Objectif</dt><dd><span class="key">150 à 300</span> réponses, dont un tiers de non-clients</dd>
+        </dl>
+      </div>
+    </article>
+    <article class="card survey-card">
+      <div class="head sal"><h3>Salariés</h3></div>
+      <div class="body">
+        <dl class="facts">
+          <dt>Public</dt><dd>Intervenantes du 13</dd>
+          <dt>Format</dt><dd><span class="key">13</span> questions, dont 6 conditionnelles, environ 5 min</dd>
+          <dt>Anonymat</dt><dd>Anonyme, sans nom ni matricule</dd>
+          <dt>Objectif</dt><dd>Au moins <span class="key">70</span> réponses, la moitié des salariés</dd>
+        </dl>
+      </div>
+    </article>
+    <article class="card survey-card">
+      <div class="head coo"><h3>Coordinateurs de parcours</h3></div>
+      <div class="body">
+        <dl class="facts">
+          <dt>Public</dt><dd>Coordinateurs et coordinatrices de parcours du 13</dd>
+          <dt>Format</dt><dd><span class="key">15</span> questions, dont 4 conditionnelles, environ 8 min</dd>
+          <dt>Anonymat</dt><dd>Confidentiel : l'effectif est petit</dd>
+          <dt>Objectif</dt><dd>Tous les coordinateurs</dd>
+        </dl>
+      </div>
+    </article>
+  </div>
+  <div class="strip"><strong>En complément :</strong> un relevé de 4 semaines des demandes non servies, l'analyse des listes d'attente, 10 à 15 entretiens avec des prescripteurs et, dès janvier, 15 à 20 entretiens avec des personnes aidées.</div>
+</section>
+
+<!-- 4 -->
+<section class="slide" id="q-aidants" data-title="Questionnaire aidants">
+  <div class="survey-top">
+    <div>
+      <div class="eyebrow">Questionnaire 1 sur 3</div>
+      <h2>Aidants et aidés</h2>
+    </div>
+    <div class="seg" role="group" aria-label="Affichage du questionnaire aidants">
+      <button type="button" data-mode="play" aria-pressed="true">Répondre</button>
+      <button type="button" data-mode="all" aria-pressed="false">Toutes les questions</button>
+    </div>
+  </div>
+  <div class="survey" data-survey="aidants"></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" id="q-salaries" data-title="Questionnaire salariés">
+  <div class="survey-top">
+    <div>
+      <div class="eyebrow">Questionnaire 2 sur 3</div>
+      <h2>Salariés</h2>
+    </div>
+    <div class="seg" role="group" aria-label="Affichage du questionnaire salariés">
+      <button type="button" data-mode="play" aria-pressed="true">Répondre</button>
+      <button type="button" data-mode="all" aria-pressed="false">Toutes les questions</button>
+    </div>
+  </div>
+  <div class="survey" data-survey="salaries"></div>
+</section>
+
+<!-- 6 -->
+<section class="slide" id="q-coordos" data-title="Questionnaire coordinateurs">
+  <div class="survey-top">
+    <div>
+      <div class="eyebrow">Questionnaire 3 sur 3</div>
+      <h2>Coordinateurs de parcours</h2>
+    </div>
+    <div class="seg" role="group" aria-label="Affichage du questionnaire coordinateurs">
+      <button type="button" data-mode="play" aria-pressed="true">Répondre</button>
+      <button type="button" data-mode="all" aria-pressed="false">Toutes les questions</button>
+    </div>
+  </div>
+  <div class="survey" data-survey="coordos"></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" id="diffusion" data-title="Diffusion">
+  <div class="eyebrow">La diffusion</div>
+  <h2>Toucher aussi ceux qui ne nous connaissent pas</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <h3>Enquête aidants : cinq cibles</h3>
+      <div class="table-wrap" style="border:0">
+        <table>
+          <thead><tr><th>Cible</th><th>Canal principal</th><th style="text-align:right">Réponses</th></tr></thead>
+          <tbody>
+            <tr><td>Familles des bénéficiaires</td><td>SMS et mail, par les agences</td><td class="num">60</td></tr>
+            <tr><td>Familles peu à l'aise avec le numérique</td><td>Flyer, téléphone, papier</td><td class="num">20</td></tr>
+            <tr><td>Salariés aidants</td><td>Application interne, affichage</td><td class="num">25</td></tr>
+            <tr><td>Aidants hors Amicial</td><td>Kit relais : pharmacies, cabinets, hôpitaux, CCAS</td><td class="num">30</td></tr>
+            <tr><td>Grand public</td><td>Page « Aidants », réseaux, presse, marchés</td><td class="num">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid" style="align-content:start">
+      <div class="card">
+        <h3>Six leviers prioritaires</h3>
+        <div class="chips">
+          <span class="chip">Kit relais en pharmacies et cabinets</span>
+          <span class="chip">Page « Aidants » et annonces Google</span>
+          <span class="chip">Colis et repas de Noël des aînés</span>
+          <span class="chip">Marché d'Arles, hall d'hôpital</span>
+          <span class="chip">Défi entre agences</span>
+          <span class="chip">Papier et téléphone</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Enquêtes internes</h3>
+        <ul>
+          <li><strong>Salariés :</strong> présentée en réunion d'équipe, 10 minutes pour répondre, puis application interne, QR code et papier. Rien n'est annoncé.</li>
+          <li><strong>Coordinateurs :</strong> envoi par les directrices SAD, 15 minutes en réunion de coordination, rappel à une semaine.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Calendrier</h3>
+    <div class="timeline">
+      <div class="tl"><div class="d">13 nov.</div><div class="l">Tests, DPO, CSE</div></div>
+      <div class="tl key-step"><div class="d">16 nov.</div><div class="l">Lancement des trois enquêtes</div></div>
+      <div class="tl"><div class="d">23 nov.</div><div class="l">Point à mi-parcours, relance</div></div>
+      <div class="tl"><div class="d">30 nov.</div><div class="l">Deuxième relance</div></div>
+      <div class="tl key-step"><div class="d">6 déc.</div><div class="l">Clôture (ou 13 déc.)</div></div>
+      <div class="tl key-step"><div class="d">7 déc.</div><div class="l">Restitution au CODIR</div></div>
+      <div class="tl"><div class="d">Janvier</div><div class="l">Annonce du poste, kit de démarrage</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" id="croisements" data-title="Croisements">
+  <div class="eyebrow">L'analyse croisée</div>
+  <h2>Onze thèmes lus par au moins deux enquêtes</h2>
+  <p class="lead">Chaque pastille est une question. On compare des classements et des parts, jamais des effectifs bruts.</p>
+  <div class="table-wrap">
+    <table class="matrix" id="matrix">
+      <thead><tr><th>Thème</th><th class="aid">Aidants</th><th class="sal">Salariés</th><th class="coo">Coordinateurs</th><th>Ce que ça éclaire</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" id="donnees" data-title="Ce qu'on peut en attendre">
+  <div class="eyebrow">Les résultats attendus</div>
+  <h2>Ce qu'on peut en attendre, et ce qu'on n'aura pas</h2>
+  <div class="grid cols-3">
+    <div class="card group">
+      <h3>Pour décider</h3>
+      <ul>
+        <li>Le classement des besoins non couverts, par source</li>
+        <li>Les raisons des refus : financement, personnel, cadre, offre absente</li>
+        <li>Un prix de départ pour un week-end de répit</li>
+        <li>Des preuves pour la dotation : soirs, nuits, week-ends</li>
+      </ul>
+    </div>
+    <div class="card group">
+      <h3>Pour développer</h3>
+      <ul>
+        <li>Le portrait des aidants du territoire</li>
+        <li>Deux ou trois segments prioritaires</li>
+        <li>La carte des prescripteurs et des partenaires</li>
+        <li>Les arguments : ce que les familles apprécient, ce qui leur manque</li>
+      </ul>
+    </div>
+    <div class="card group">
+      <h3>Pour valoriser</h3>
+      <ul>
+        <li>Un réservoir de talents internes</li>
+        <li>La part de salariés aidants, sujet QVCT</li>
+        <li>5 à 10 histoires pour la marque employeur</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid cols-2">
+    <div class="card">
+      <h3>Seuils de décision à valider avant les résultats</h3>
+      <div class="table-wrap" style="border:0">
+        <table>
+          <thead><tr><th>Signal</th><th>Seuil proposé</th><th>Si atteint</th></tr></thead>
+          <tbody>
+            <tr><td>Intérêt pour le relayage chez les non-clients</td><td>30 % ou plus</td><td>Offre test de répit</td></tr>
+            <tr><td>Budget pour un week-end de 48 h</td><td>Un tiers à 400 € ou plus</td><td>Plein tarif envisageable</td></tr>
+            <tr><td>Non-recours faute d'information</td><td>Un quart des aidants sans aide</td><td>Priorité aux prescripteurs</td></tr>
+            <tr><td>Refus faute d'intervenant</td><td>Première raison chez les coordinateurs</td><td>Recruter avant de vendre</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card missing">
+      <h3>Ce que les enquêtes n'apporteront pas</h3>
+      <ul>
+        <li><strong>Une taille de marché.</strong> Aucun échantillon n'est représentatif.</li>
+        <li><strong>La capacité des équipes.</strong> Les volontaires pour la nuit ou le relayage seront sollicités plus tard.</li>
+        <li><strong>Les prix des concurrents.</strong> Appels mystères et grilles publiques, à part.</li>
+        <li><strong>La voix directe des personnes aidées.</strong> Les entretiens de janvier la recueillent (diapositive suivante).</li>
+        <li><strong>L'accueil téléphonique.</strong> Couvert en partie par les écoutes aléatoires.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" id="entretiens-aides" data-title="Entretiens avec les personnes aidées">
+  <div class="eyebrow">Une première mission pour le poste de janvier</div>
+  <h2>Donner la parole aux personnes aidées</h2>
+  <p class="lead">Les questionnaires recueillent surtout la voix des aidants. Pour entendre les personnes accompagnées, il faut aller les voir ou les appeler. Une bonne première mission pour le futur chargé de développement : il découvre les familles, les équipes et le territoire avant d'aller voir les prescripteurs.</p>
+  <div class="grid cols-2">
+    <div class="grid" style="align-content:start">
+    <div class="card format">
+      <span class="tag">À domicile</span>
+      <h3>Un entretien de 30 à 45 minutes</h3>
+      <p>La coordinatrice de parcours présente le chargé de développement lors de la première visite. Un proche peut être présent si la personne le souhaite.</p>
+    </div>
+    <div class="card format">
+      <span class="tag">Par téléphone</span>
+      <h3>Un appel de 15 à 20 minutes</h3>
+      <p>Pour les personnes à l'aise au téléphone ou difficiles à rencontrer. La coordinatrice les prévient avant l'appel.</p>
+    </div>
+    </div>
+    <div class="card">
+      <dl class="facts">
+        <dt>Qui</dt><dd>15 à 20 personnes proposées par les coordinateurs : situations variées, Marseille et Arles, avec ou sans aide publique</dd>
+        <dt>Quand</dt><dd>Les six premières semaines du poste</dd>
+        <dt>Accord</dt><dd>Demandé oralement et noté, sans enregistrement. La personne peut arrêter à tout moment</dd>
+        <dt>Précaution</dt><dd>En cas de troubles de la mémoire, l'entretien se fait avec un proche</dd>
+        <dt>Résultat</dt><dd>Une fiche par entretien sur les 11 thèmes des enquêtes, des citations anonymes, trois ou quatre portraits types</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="card">
+    <div class="guide-top">
+      <h3>Le guide d'entretien</h3>
+      <span class="small muted">Six questions ouvertes, une ouverture et une clôture. Cliquez sur une étape pour la déplier.</span>
+    </div>
+    <div class="guide" id="guide"></div>
+  </div>
+  <div class="strip"><strong>Un entretien d'écoute, jamais un rendez-vous commercial :</strong> aucune offre n'est présentée pendant l'échange. Un besoin urgent repéré est transmis à la coordinatrice, avec l'accord de la personne.</div>
+</section>
+
+<!-- 11 -->
+<section class="slide" id="profil" data-title="Le profil recherché">
+  <div class="eyebrow">Le poste de janvier</div>
+  <h2>Quel profil pour porter la démarche sur le terrain ?</h2>
+  <p class="lead">Chaque part de la silhouette correspond au poids d'une compétence dans le poste. Survolez ou touchez une partie pour la détailler.</p>
+  <div class="profile-wrap">
+    <div class="figure" id="figure"></div>
+    <div class="legend" id="legend" role="group" aria-label="Compétences recherchées"></div>
+    <div class="card detail" id="detail" aria-live="polite"></div>
+  </div>
+  <div class="grid cols-2">
+    <div class="card where-list">
+      <h3>Où trouver ce mélange</h3>
+      <div class="chips">
+        <span class="chip">Assistante sociale ou conseillère en économie sociale et familiale en reconversion</span>
+        <span class="chip">Coordinateur de parcours ou responsable de secteur</span>
+        <span class="chip">Ancien délégué médical</span>
+        <span class="chip">Chargé de relation en mutuelle ou caisse de retraite</span>
+        <span class="chip">Responsable de résidence seniors</span>
+      </div>
+      <p class="small muted" style="margin-top:12px">L'énergie et l'aisance se repèrent en mise en situation, quel que soit l'âge ou le diplôme.</p>
+    </div>
+    <div class="card">
+      <h3>Le poste en bref</h3>
+      <dl class="facts">
+        <dt>Intitulé</dt><dd>Chargé(e) de développement et des partenariats</dd>
+        <dt>Première mission</dt><dd>Les entretiens avec les personnes aidées <button type="button" class="btn small" id="to-entretiens" style="margin-left:6px">Voir</button></dd>
+        <dt>Sélection</dt><dd>Une mise en situation face à une coordinatrice, un coordinateur dans le jury</dd>
+        <dt>En appui</dt><dd>Un profil junior en alternance, si on le souhaite</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" id="decisions" data-title="Décisions attendues">
+  <div class="eyebrow">Ce qu'on attend du CODIR</div>
+  <h2>Huit décisions à prendre aujourd'hui</h2>
+  <p class="lead">Le statut choisi est enregistré et visible par tous les participants.</p>
+  <div class="decisions" id="decision-list"></div>
+</section>
+
+<!-- 13 -->
+<section class="slide" id="recap" data-title="Notes de séance">
+  <div class="survey-top">
+    <div>
+      <div class="eyebrow">Fin de séance</div>
+      <h2>Notes de séance</h2>
+    </div>
+    <button class="btn primary" type="button" id="copy-all">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+      Copier toutes les notes
+    </button>
+  </div>
+  <p class="lead">Toutes les notes prises pendant la présentation, diapositive par diapositive.</p>
+  <div id="copy-zone" hidden><textarea class="copy-fallback" id="copy-text" readonly aria-label="Texte des notes à copier"></textarea></div>
+  <div id="recap-list"></div>
+</section>
+
+</main>
+
+<aside id="notes" aria-label="Notes de séance" hidden>
+  <div class="notes-head">
+    <h2>Notes de séance</h2>
+    <button class="icon-btn" type="button" id="notes-close" aria-label="Fermer les notes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="notes-filter">
+    <div class="seg" role="group" aria-label="Notes affichées">
+      <button type="button" id="f-slide" aria-pressed="true">Cette diapositive</button>
+      <button type="button" id="f-all" aria-pressed="false">Toutes</button>
+    </div>
+  </div>
+  <div class="notes-list" id="notes-list" aria-live="polite"></div>
+  <form class="composer" id="composer">
+    <div class="ctx-chip"><span id="ctx-label">Diapositive</span><button type="button" id="ctx-clear" hidden>Toute la diapositive</button></div>
+    <label for="note-text" class="notes-status">Votre note</label>
+    <textarea id="note-text" placeholder="Remarque, modification demandée, décision…" required></textarea>
+    <div class="row">
+      <span class="notes-status" id="notes-status">Connexion au carnet…</span>
+      <button class="btn primary small" type="submit" id="note-add">Ajouter la note</button>
+    </div>
+  </form>
+</aside>
+</div>
+
+<footer class="footbar gutter">
+  <div class="nav">
+    <button class="btn small" type="button" id="prev" aria-label="Diapositive précédente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      <span class="lbl">Précédente</span>
+    </button>
+    <span id="counter" aria-live="polite">1 / 13</span>
+    <button class="btn small" type="button" id="next" aria-label="Diapositive suivante">
+      <span class="lbl">Suivante</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+  <div class="dots" id="dots" role="group" aria-label="Aller à une diapositive"></div>
+  <button class="btn accent small" type="button" id="notes-toggle" aria-expanded="false" aria-controls="notes">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>
+    <span class="lbl">Notes</span> <span class="count" id="notes-count">0</span>
+  </button>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const el = (tag, attrs, ...kids) => {
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    if (k === "class") n.className = attrs[k];
+    else if (k === "text") n.textContent = attrs[k];
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), attrs[k]);
+    else if (attrs[k] !== false && attrs[k] != null) n.setAttribute(k, attrs[k] === true ? "" : attrs[k]);
+  }
+  for (const c of kids) if (c != null) n.append(c);
+  return n;
+};
+
+/* ---------- Données des questionnaires ---------- */
+const AIDES = ["Plus d'heures que celles prévues","Une présence la nuit","Remplacer la famille quelques heures ou quelques jours","Accompagner chez le médecin, à l'hôpital ou en sortie","De la compagnie, des activités, du lien social","Une aide renforcée au retour d'une hospitalisation","De l'aide pour les papiers et les démarches","De l'aide avec le téléphone, la tablette ou internet","Des petits travaux ou aménagements dans le logement","Des conseils ou du soutien pour la famille","Quelqu'un pour tout coordonner","Autre"];
+
+const SURVEYS = {
+  aidants: {
+    key:"aidants", short:"Aidants", color:"aid",
+    title:"Vous aidez un proche. Et vous, qui vous aide ?",
+    intro:["Vous accompagnez au quotidien un parent, un conjoint, un enfant ou un ami en raison de son âge, d'une maladie ou d'un handicap ? Amicial, association d'aide, de soin et d'accompagnement à domicile, interroge les proches aidants des Bouches-du-Rhône pour comprendre ce qui leur manque et construire des solutions utiles. Le questionnaire prend 10 à 12 minutes. Il n'y a pas de bonne ou de mauvaise réponse.","Vos réponses sont anonymes : nous ne vous demandons ni votre nom ni vos coordonnées. Elles sont traitées par Amicial, uniquement pour cette étude, et conservées 12 mois."],
+    end:"Merci pour votre temps et votre confiance. Nous partagerons les résultats de cette enquête début 2027 sur amicial.fr. Si vous vous sentez épuisé(e), parlez-en à votre médecin traitant ou à la plateforme d'accompagnement et de répit de votre secteur : vous n'avez pas à tout porter seul(e).",
+    side:["Dans Forms, ce questionnaire est intégré à la page « Aidants » d'amicial.fr.","Les branchements sont actifs ici comme dans le vrai formulaire : répondez « Non » à la question 18 pour voir le parcours d'un aidant sans aide professionnelle.","Les réponses saisies ici ne sont pas enregistrées."],
+    questions:[
+      {n:1, sec:"Consentement", text:"J'ai lu ces informations et j'accepte de répondre au questionnaire.", type:"single", opts:["Oui","Non"], required:true, jump:{1:"end"}, endMsg:"Merci. Vous pouvez fermer cette page.", note:"Non → fin du formulaire"},
+      {n:2, sec:"Vous et votre proche", text:"Aidez-vous régulièrement un proche (conjoint, parent, enfant, ami…) en raison de son âge, d'une maladie ou d'un handicap ?", type:"single", opts:["Oui, en ce moment","Oui, au cours des deux dernières années","Non"], required:true, jump:{2:"end"}, endMsg:"Merci ! Ce questionnaire s'adresse aux personnes qui aident un proche.", note:"Non → fin du formulaire"},
+      {n:3, text:"Quel est votre lien avec cette personne ?", type:"single", opts:["C'est mon conjoint ou ma conjointe","C'est mon père, ma mère ou un beau-parent","C'est mon enfant","Un autre membre de ma famille","Un ami ou un voisin"]},
+      {n:4, text:"Quel âge avez-vous ?", type:"single", opts:["Moins de 30 ans","30 à 49 ans","50 à 64 ans","65 à 79 ans","80 ans et plus"]},
+      {n:5, text:"Quelle est votre situation professionnelle ?", type:"single", opts:["En emploi (salarié, indépendant…)","À la retraite","Sans emploi","Autre"], jump:{1:7,2:7,3:7}, note:"Autre que « En emploi » → Q7"},
+      {n:6, text:"Travaillez-vous chez Amicial ?", type:"single", opts:["Oui","Non"], cond:"Si en emploi"},
+      {n:7, text:"Quel âge a la personne que vous aidez ?", type:"single", opts:["Moins de 20 ans","20 à 59 ans","60 à 74 ans","75 à 84 ans","85 ans et plus"]},
+      {n:8, text:"Pour quelle raison a-t-elle besoin d'aide ?", type:"multi", opts:["Perte d'autonomie liée à l'âge","Maladie d'Alzheimer ou troubles de la mémoire","Autre maladie neurologique (Parkinson, AVC, sclérose en plaques…)","Handicap physique","Handicap psychique, mental ou trouble du neurodéveloppement","Maladie chronique ou cancer","Convalescence après une hospitalisation","Autre"]},
+      {n:9, text:"Quel est le code postal de son domicile ?", type:"short"},
+      {n:10, text:"Vivez-vous avec elle ?", type:"single", opts:["Oui, sous le même toit","Non, j'habite à moins de 30 minutes","Non, j'habite à plus de 30 minutes"]},
+      {n:11, text:"Bénéficie-t-elle d'une aide financière pour son autonomie ?", type:"multi", opts:["L'APA (allocation personnalisée d'autonomie)","La PCH (prestation de compensation du handicap)","Une aide de sa caisse de retraite","Aucune","Je ne sais pas"]},
+      {n:12, sec:"Votre quotidien d'aidant", text:"Combien de temps consacrez-vous à cette aide chaque semaine ?", type:"single", opts:["Moins de 5 heures","5 à 10 heures","10 à 20 heures","Plus de 20 heures","Une présence quasi permanente"]},
+      {n:13, text:"Pour quoi l'aidez-vous ?", type:"multi", opts:["Toilette, habillage","Repas","Ménage, linge","Courses","Médicaments et rendez-vous médicaux","Papiers et démarches","Surveillance, présence la nuit","Transports et sorties","Compagnie, conversation","Imprévus (chutes, crises, urgences)"]},
+      {n:14, text:"D'autres proches vous aident-ils ?", type:"single", opts:["Oui, régulièrement","De temps en temps","Non, je fais face seul(e)"]},
+      {n:15, text:"Comment vous sentez-vous en ce moment par rapport à cette aide ?", type:"single", opts:["En forme","Un peu fatigué(e)","Assez fatigué(e)","Très fatigué(e)","À bout"]},
+      {n:16, text:"Au cours des 12 derniers mois, votre rôle d'aidant vous a-t-il fait renoncer à…", type:"multi", opts:["Des soins pour vous-même","Des vacances","Des loisirs ou des sorties","Une partie de votre travail (absences, temps partiel, arrêt)","Du temps avec votre famille ou vos amis","Rien de tout cela"]},
+      {n:17, text:"Quels sont les moments les plus difficiles ?", type:"multi", opts:["Les nuits","Les week-ends","Les vacances scolaires et l'été","Les retours d'hospitalisation","Quand je suis moi-même malade ou indisponible","Les imprévus et les urgences","Le quotidien de la semaine"]},
+      {n:18, sec:"Les aides que vous utilisez", text:"Votre proche reçoit-il aujourd'hui une aide professionnelle (aide à domicile, soins infirmiers, accueil de jour, téléassistance…) ?", type:"single", opts:["Oui","Non"], required:true, jump:{1:24}, note:"Non → Q24"},
+      {n:19, text:"Quelles aides professionnelles votre proche reçoit-il aujourd'hui ?", type:"multi", opts:["Aide à domicile (ménage, repas, toilette)","Soins infirmiers à domicile","Garde de nuit","Accueil de jour","Hébergement temporaire","Relayage ou baluchonnage","Téléassistance","Portage de repas","Plateforme de répit ou groupe de parole pour les aidants","Autre"], cond:"Si aide professionnelle"},
+      {n:20, text:"Qui assure l'aide à domicile ?", type:"multi", opts:["Amicial","Une autre association","Une entreprise privée","Le CCAS ou la mairie","Un salarié que nous employons directement (CESU)","Un salarié employé via un service mandataire","Je ne sais pas"], cond:"Si aide professionnelle"},
+      {n:21, text:"Dans l'ensemble, êtes-vous satisfait(e) de ces aides ?", type:"single", opts:["Très satisfait(e)","Plutôt satisfait(e)","Peu satisfait(e)","Pas du tout satisfait(e)"], cond:"Si aide professionnelle"},
+      {n:22, text:"Qu'est-ce qui vous manque ou vous déçoit le plus ?", type:"multi", max:3, opts:["Des horaires pas assez souples","Trop de changements d'intervenants","Un délai trop long pour démarrer","Rien le soir, la nuit ou le week-end","Pas assez de nouvelles pour la famille","Le coût","La qualité des prestations","Des démarches compliquées","Rien, tout va bien"], cond:"Si aide professionnelle"},
+      {n:23, text:"Combien votre famille paie-t-elle chaque mois pour ces aides, une fois les aides publiques déduites (avant crédit d'impôt) ?", type:"single", opts:["Rien","Moins de 100 €","100 à 300 €","300 à 600 €","Plus de 600 €","Je préfère ne pas répondre"], after:25, cond:"Si aide professionnelle", note:"Toutes les réponses → Q25"},
+      {n:24, text:"Votre proche ne reçoit aucune aide professionnelle : pour quelles raisons ?", type:"multi", opts:["Pas besoin pour l'instant","C'est trop cher","Je ne sais pas à qui m'adresser","Mon proche refuse","Les démarches sont trop compliquées","Une mauvaise expérience passée","Un service a refusé ou n'avait pas de place"], cond:"Si aucune aide professionnelle"},
+      {n:25, sec:"Vos besoins et le répit", text:"Si une personne de confiance pouvait vous remplacer auprès de votre proche, ce serait pour :", type:"multi", opts:["Quelques heures par semaine, pour souffler","Une soirée ou une nuit","Un week-end","Plusieurs jours (vacances, hospitalisation, événement familial)","En urgence, quand j'ai un imprévu","Je ne souhaite pas être remplacé(e)"]},
+      {n:26, text:"Le relayage (ou baluchonnage) : un professionnel unique s'installe au domicile de votre proche, jour et nuit, pendant un ou plusieurs jours, pour que vous puissiez partir l'esprit tranquille. Connaissiez-vous ce service ?", type:"single", opts:["Oui, je l'ai déjà utilisé","Oui, j'en ai entendu parler","Non"]},
+      {n:27, text:"Ce service pourrait-il vous intéresser ?", type:"single", opts:["Très intéressé(e)","Plutôt intéressé(e)","Peu intéressé(e)","Pas du tout intéressé(e)"]},
+      {n:28, text:"Qu'est-ce qui pourrait vous freiner ?", type:"multi", opts:["Le prix","Confier mon proche à quelqu'un que je ne connais pas","Mon proche ne l'accepterait pas","Je culpabiliserais de partir","Je ne saurais pas comment l'organiser","Rien"]},
+      {n:29, text:"Quels besoins sont aujourd'hui les plus mal couverts pour vous ?", type:"multi", max:3, opts:["Savoir à qui m'adresser","De l'aide pour les démarches","Être formé(e) pour mieux aider (gestes, connaissance de la maladie)","Du soutien psychologique, un groupe de parole","Un relais au retour d'hospitalisation","Une présence la nuit","Un accompagnement aux rendez-vous et aux sorties","Des activités et du lien social pour mon proche","L'aménagement du logement","Un seul interlocuteur qui coordonne tous les intervenants"]},
+      {n:30, text:"Si une seule chose pouvait changer dès demain pour vous faciliter la vie, ce serait quoi ?", type:"text"},
+      {n:31, sec:"Des services à imaginer ensemble", text:"Lesquels de ces services pourraient vous intéresser ?", type:"multi", opts:["Un forfait répit week-end : un professionnel à domicile du vendredi soir au dimanche soir","Des gardes de nuit ponctuelles","Un forfait « retour à la maison » après une hospitalisation (aide renforcée pendant 2 à 4 semaines)","Un accompagnement aux rendez-vous médicaux et aux sorties","Des visites de convivialité régulières (compagnie, jeux, promenade)","Un interlocuteur unique qui organise tout (aide, soins, démarches)","Des ateliers pratiques pour les aidants","Un bilan du logement (sécurité, aménagements)","Une aide au numérique (appels vidéo avec la famille, démarches en ligne)","Aucun de ces services"]},
+      {n:32, text:"Pour un week-end de répit complet (environ 48 heures avec un professionnel au domicile de votre proche), quel budget vous paraîtrait acceptable, avant crédit d'impôt ?", type:"single", opts:["Moins de 200 €","200 à 400 €","400 à 700 €","700 à 1 000 €","Plus de 1 000 €","Je ne pourrais pas payer ce type de service"]},
+      {n:33, text:"Vous préféreriez payer :", type:"single", opts:["À l'heure, selon ce qui est utilisé","Un forfait mensuel tout compris (heures, coordination, interlocuteur joignable)","Sans avis"]},
+      {n:34, text:"Pour choisir un service, qu'est-ce qui compte le plus pour vous ?", type:"multi", max:3, opts:["Garder la même intervenante","Un démarrage rapide","Le prix","Une présence possible le soir et le week-end","Des professionnels diplômés","Un interlocuteur facile à joindre","Des nouvelles régulières (SMS, application)","La recommandation d'un proche ou d'un professionnel","Une structure associative, sans but lucratif"]},
+      {n:35, text:"Si votre employeur prenait en charge une partie de ces services, les utiliseriez-vous ?", type:"single", opts:["Oui, sûrement","Peut-être","Non","Je ne suis pas concerné(e)"]},
+      {n:36, sec:"Pour finir", text:"Où cherchez-vous de l'information quand vous avez besoin d'aide ?", type:"multi", opts:["Le médecin traitant","L'hôpital, une assistante sociale","La mairie, le CCAS","Le Département ou la MDPH","Internet","Les réseaux sociaux","Le bouche-à-oreille","La pharmacie","Une association de malades","La caisse de retraite ou la mutuelle","Une plateforme de répit"]},
+      {n:37, text:"Connaissez-vous Amicial ?", type:"single", opts:["Oui, mon proche est accompagné par Amicial","Oui, de nom","Non"]},
+      {n:38, text:"Comment avez-vous reçu ce questionnaire ?", type:"single", opts:["Par Amicial (SMS, mail, courrier)","Par une intervenante à domicile","Sur le site internet d'Amicial","Sur les réseaux sociaux","Dans un lieu public (pharmacie, cabinet médical, mairie, médiathèque…)","Par une affiche","Sur un marché ou un stand","Dans ma boîte aux lettres","Par la presse ou la radio","Par un partenaire (CCAS, hôpital, association)","Par mon employeur","Autre"]},
+      {n:39, text:"Accepteriez-vous un échange de 20 minutes par téléphone pour aller plus loin ? Si oui, vous laisserez vos coordonnées sur un formulaire séparé : vos réponses à ce questionnaire restent anonymes.", type:"single", opts:["Oui, je laisse mes coordonnées sur le formulaire séparé","Non merci"]}
+    ]
+  },
+  salaries: {
+    key:"salaries", short:"Salariés", color:"sal",
+    title:"Au-delà du métier",
+    intro:["Vous connaissez mieux que personne les personnes chez qui vous intervenez. Et vous avez sûrement des talents que nous ne connaissons pas. Ce petit questionnaire nous aide à mieux vous connaître et à mieux comprendre ce que vous voyez sur le terrain, pour améliorer notre accompagnement.","Environ 5 minutes, anonyme. Il n'y a pas de bonne ou de mauvaise réponse."],
+    end:"Merci pour votre temps ! Nous vous partagerons ce que nous avons appris début 2027.",
+    side:["Les questions 1 à 4 sont ouvertes : leurs réponses seront codées au dépouillement.","Les listes des questions 7 et 8 sont communes avec l'enquête coordinateurs et correspondent aux catégories de l'enquête aidants.","À confirmer : les réponses proposées à la question 13."],
+    questions:[
+      {n:1, sec:"Vos parcours et vos talents", text:"En dehors d'Amicial, dans quels domaines avez-vous étudié ou travaillé ?", type:"text"},
+      {n:2, text:"Selon vous, qu'est-ce que les personnes que vous accompagnez aiment le plus faire avec vous ?", type:"text"},
+      {n:3, text:"Et vous, qu'aimez-vous le plus faire avec elles ?", type:"text"},
+      {n:4, text:"En dehors de vos missions habituelles, qu'aimez-vous faire que vous pourriez partager avec les personnes que vous accompagnez ?", type:"text"},
+      {n:5, sec:"Ce que vous observez", text:"Les personnes que vous accompagnez ou leurs familles vous ont-elles déjà demandé une aide que vous n'avez pas pu leur apporter ?", type:"single", opts:["Oui, souvent","Oui, parfois","Non"], required:true, jump:{2:9}, note:"Non → Q9"},
+      {n:6, text:"Qui vous l'a demandée ?", type:"single", opts:["La personne elle-même","Sa famille","Les deux"], cond:"Si oui"},
+      {n:7, text:"De quelle aide s'agissait-il ?", type:"multi", max:3, opts:AIDES, cond:"Si oui"},
+      {n:8, text:"Pourquoi n'avez-vous pas pu l'apporter ?", type:"multi", opts:["Ce n'était pas prévu dans le plan d'aide","Pas assez de temps pendant l'intervention","Ce n'est pas dans mes missions","Je n'étais pas formé(e) pour cela","Amicial ne propose pas ce service","Autre"], cond:"Si oui"},
+      {n:9, sec:"Une histoire", text:"Quelle est la chose la plus inhabituelle, la plus drôle ou la plus intéressante que vous ayez faite avec une personne que vous accompagnez ?", type:"text", optional:true},
+      {n:10, sec:"Et vous ?", text:"Et vous, aidez-vous un proche malade, âgé ou handicapé, en dehors du travail ?", type:"single", opts:["Oui","Non","Je préfère ne pas répondre"], optional:true, jump:{1:"end",2:"end"}, ifEmpty:"end", note:"Oui → Q11 ; Non, « Je préfère ne pas répondre » ou sans réponse → fin"},
+      {n:11, text:"De quoi auriez-vous besoin, pour vous-même, dans votre rôle d'aidant ?", type:"text", cond:"Si oui", help:"Sans nom ni information médicale."},
+      {n:12, text:"Et pour la personne que vous aidez, de quoi aurait-elle besoin ?", type:"text", cond:"Si oui", help:"Sans nom ni information médicale."},
+      {n:13, text:"Seriez-vous intéressé(e) qu'Amicial propose un accompagnement à ses salariés aidants ?", type:"single", opts:["Oui","Peut-être","Non"], cond:"Si oui", note:"Réponses à confirmer"}
+    ]
+  },
+  coordos: {
+    key:"coordos", short:"Coordinateurs", color:"coo",
+    title:"Les demandes que nous recevons",
+    intro:["Vous êtes les premiers à recevoir les demandes des familles et des partenaires. Ce questionnaire nous aide à mieux connaître celles auxquelles nous ne pouvons pas répondre aujourd'hui, et ce que vous voyez sur votre territoire, pour améliorer notre accompagnement.","Environ 8 minutes. Vos réponses restent confidentielles."],
+    end:"Merci ! Vos réponses nous aident à mieux répondre aux familles.",
+    side:["La question 8 est à surveiller : si « Pas d'intervenant disponible » domine, le premier frein est le recrutement, pas l'offre.","La question 9 dit si des prestations payantes hors plan d'aide sont déjà proposées.","Corrigé : la question 12 reprend la liste de la question 7."],
+    questions:[
+      {n:1, sec:"Vos parcours et vos talents", text:"En dehors d'Amicial, dans quels domaines avez-vous étudié ou travaillé ?", type:"text"},
+      {n:2, text:"Quelles compétences ou passions personnelles pourriez-vous mettre au service des personnes accompagnées ou de vos équipes ? (ex. : animation, numérique, cuisine, langues, bricolage, réseau local…)", type:"text"},
+      {n:3, sec:"La relation", text:"Selon vous, qu'est-ce que les personnes accompagnées et leurs familles apprécient le plus dans l'accompagnement d'Amicial ?", type:"text"},
+      {n:4, text:"Et vous, qu'est-ce que vous aimez le plus dans votre relation avec les personnes accompagnées et leurs familles ?", type:"text"},
+      {n:5, sec:"Les demandes non servies", text:"Avez-vous déjà reçu des demandes d'aide auxquelles Amicial n'a pas pu répondre ?", type:"single", opts:["Oui, souvent","Oui, parfois","Non"], required:true, jump:{2:10}, note:"Non → Q10"},
+      {n:6, text:"De qui venaient ces demandes ?", type:"multi", opts:["La personne elle-même","Sa famille","Un intervenant à domicile","Un partenaire (médecin, hôpital, CCAS, Département, MDPH, service social…)","Autre"], cond:"Si oui"},
+      {n:7, text:"De quelle aide s'agissait-il ?", type:"multi", max:3, opts:AIDES, cond:"Si oui"},
+      {n:8, text:"Pourquoi n'avez-vous pas pu y répondre ?", type:"multi", opts:["Ce n'était pas prévu dans le plan d'aide (APA, PCH, caisse de retraite…)","Le reste à charge était trop élevé pour la personne","Le tarif ou le financement ne couvre pas le coût réel","Pas d'intervenant disponible (recrutement, planning)","Secteur géographique trop éloigné ou temps de trajet trop long","Les intervenants ne sont pas formés pour cela","Amicial ne propose pas ce service","Hors de notre autorisation ou de notre cadre réglementaire","Autre"], cond:"Si oui"},
+      {n:9, text:"Quelle suite avez-vous le plus souvent donnée ?", type:"single", opts:["Orientation vers un partenaire ou un autre service","Demande de révision du plan d'aide","Proposition d'une prestation payante hors plan d'aide","Pas de solution trouvée","Autre"], cond:"Si oui"},
+      {n:10, sec:"Votre territoire", text:"Votre agence tient-elle une liste d'attente ?", type:"single", opts:["Oui, tenue à jour","Oui, mais informelle","Non","Je ne sais pas"]},
+      {n:11, text:"Vos intervenants vous font-ils remonter des besoins non couverts repérés au domicile ?", type:"single", opts:["Oui, souvent","Oui, parfois","Rarement ou jamais"]},
+      {n:12, text:"Parmi ces aides, lesquelles Amicial devrait-elle développer en priorité sur votre secteur ?", type:"multi", max:3, opts:AIDES, note:"Même liste que la question 7"},
+      {n:13, text:"Selon vous, les personnes ou familles qui font ces demandes seraient-elles prêtes à payer une prestation hors plan d'aide ?", type:"single", opts:["Oui, la plupart","Certaines seulement","Rarement","Je ne sais pas"]},
+      {n:14, text:"Existe-t-il sur votre territoire des partenaires qui répondent déjà à ces besoins, ou au contraire des besoins sans aucune solution locale ? Précisez.", type:"text"},
+      {n:15, sec:"Une histoire", text:"Quelle est la demande la plus inhabituelle que vous ayez reçue, ou la solution la plus créative que vous ayez trouvée pour une personne accompagnée ?", type:"text", optional:true}
+    ]
+  }
+};
+
+const MATRIX = [
+  ["Besoins non couverts", ["29","31","25"], ["7"], ["7","12"], "Les priorités vues par trois sources"],
+  ["Qui demande", ["3"], ["6"], ["6"], "Qui convaincre, qui paie, le poids des prescripteurs"],
+  ["Pourquoi la demande n'est pas servie", ["24","28"], ["8"], ["8"], "Financement, personnel, cadre ou offre absente"],
+  ["Ce que deviennent les demandes", ["20"], [], ["9","10"], "Ce qui part ailleurs, ce qu'on vend déjà hors plan d'aide"],
+  ["L'ampleur", ["12","15"], ["5"], ["5","11"], "La taille du besoin, la remontée du terrain"],
+  ["Les moments critiques", ["17","25"], ["7"], ["7"], "L'amplitude horaire, axe de la dotation"],
+  ["Ce qui plaît dans l'accompagnement", ["21","22","34"], ["2","3"], ["3","4"], "Les points forts du discours"],
+  ["Les savoir-faire disponibles", ["31"], ["1","4"], ["1","2"], "La demande face aux talents internes"],
+  ["Le prix et la solvabilité", ["23","32","33"], ["8"], ["8","9","13"], "Le marché des heures en plus"],
+  ["Les canaux et les partenaires", ["36","37","38"], [], ["6","14"], "Où porter l'effort commercial"],
+  ["Les salariés aidants", ["6","35"], ["10","11","12","13"], [], "QVCT, offre « salariés aidants »"]
+];
+
+const DECISIONS = [
+  {id:"d1", text:"Valider les trois questionnaires, ou les modifier"},
+  {id:"d2", text:"Valider le calendrier : lancement le 16 novembre, clôture le 6 décembre"},
+  {id:"d3", text:"Valider les leviers de diffusion et le budget d'impression"},
+  {id:"d4", text:"Valider les seuils de décision, avant les résultats"},
+  {id:"d8", text:"Confier au futur chargé de développement, comme première mission, 15 à 20 entretiens avec des personnes aidées"},
+  {id:"d5", text:"Valider le profil et l'intitulé du poste de chargé de développement"},
+  {id:"d6", text:"Ajouter au formulaire des volontaires une case de consentement pour être recontacté"},
+  {id:"d7", text:"Lancer le relevé des demandes non servies dans les trois agences"}
+];
+const STATUSES = [["valide","Validé"],["a-revoir","À revoir"],["en-attente","En attente"]];
+
+/* ---------- Navigation ---------- */
+const slides = $$(".slide");
+const stage = $("#stage");
+let current = 0;
+const dots = $("#dots");
+slides.forEach((s, i) => {
+  dots.append(el("button", {type:"button", "aria-label":"Diapositive " + (i+1) + " : " + s.dataset.title, onclick:() => go(i)}));
+});
+function indexFromHash(){
+  const h = location.hash.replace("#","");
+  const i = slides.findIndex(s => s.id === h);
+  return i >= 0 ? i : 0;
+}
+function go(i){
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((s, k) => s.classList.toggle("active", k === i));
+  current = i;
+  $("#counter").textContent = (i + 1) + " / " + slides.length;
+  $("#prev").disabled = i === 0;
+  $("#next").disabled = i === slides.length - 1;
+  $$("button", dots).forEach((b, k) => b.setAttribute("aria-current", k === i ? "true" : "false"));
+  stage.scrollTop = 0;
+  if (location.hash !== "#" + slides[i].id) {
+    try { history.replaceState(null, "", "#" + slides[i].id); } catch (e) { location.hash = slides[i].id; }
+  }
+  notes.target = null;
+  renderNotes();
+}
+$("#prev").addEventListener("click", () => go(current - 1));
+$("#next").addEventListener("click", () => go(current + 1));
+window.addEventListener("hashchange", () => { const i = indexFromHash(); if (i !== current) go(i); });
+document.addEventListener("keydown", e => {
+  const t = e.target;
+  if (t && t.closest && t.closest("input, textarea, select, [contenteditable]")) return;
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  if (e.key === "ArrowRight" || e.key === "PageDown") { go(current + 1); e.preventDefault(); }
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") { go(current - 1); e.preventDefault(); }
+});
+$("#fs").addEventListener("click", () => {
+  try {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
+  } catch (e) {}
+});
+
+/* ---------- Matrice des croisements ---------- */
+const mbody = $("#matrix tbody");
+const qChips = (arr, cls) => {
+  const td = el("td");
+  if (!arr.length) { td.className = "none"; td.textContent = "–"; return td; }
+  arr.forEach(q => td.append(el("span", {class:"q " + cls, text:"Q" + q})));
+  return td;
+};
+MATRIX.forEach(r => {
+  mbody.append(el("tr", null, el("td", null, el("strong", {text:r[0]})), qChips(r[1], "aid"), qChips(r[2], "sal"), qChips(r[3], "coo"), el("td", {class:"muted", text:r[4]})));
+});
+
+/* ---------- Questionnaires interactifs ---------- */
+function typeLabel(q){
+  if (q.type === "text" || q.type === "short") return "Réponse libre";
+  if (q.type === "multi") return q.max ? q.max + " réponses maximum" : "Plusieurs réponses possibles";
+  return "Une seule réponse";
+}
+function makeSurvey(slide){
+  const root = $(".survey", slide);
+  const def = SURVEYS[root.dataset.survey];
+  const byN = new Map(def.questions.map(q => [q.n, q]));
+  const total = def.questions.length;
+  const st = {mode:"play", pos:"intro", answers:{}, history:[], endMsg:null, seen:new Set()};
+  const segBtns = $$(".seg button", slide);
+  segBtns.forEach(b => b.addEventListener("click", () => {
+    st.mode = b.dataset.mode;
+    segBtns.forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    render();
+  }));
+  function isEmpty(q){
+    const a = st.answers[q.n];
+    if (a == null) return true;
+    if (Array.isArray(a)) return a.length === 0;
+    if (typeof a === "string") return a.trim() === "";
+    return false;
+  }
+  function nextOf(q){
+    const a = st.answers[q.n];
+    if (q.ifEmpty && isEmpty(q)) return q.ifEmpty;
+    if (q.jump && typeof a === "number" && q.jump[a] !== undefined) {
+      if (q.jump[a] === "end") { st.endMsg = q.endMsg || null; return "end"; }
+      return q.jump[a];
+    }
+    if (q.after) return q.after;
+    return q.n < total ? q.n + 1 : "end";
+  }
+  function commentBtn(q){
+    return el("button", {type:"button", class:"btn small", onclick:() => openNotes({target:def.key + ":Q" + q.n, label:"Questionnaire " + def.short.toLowerCase() + " · Q" + q.n})}, "Commenter");
+  }
+  function renderOptions(q){
+    const box = el("div", {class:"opts", role: q.type === "single" ? "radiogroup" : "group", "aria-label": q.text});
+    const name = def.key + "-q" + q.n;
+    q.opts.forEach((o, i) => {
+      const id = name + "-o" + i;
+      const input = el("input", {type: q.type === "single" ? "radio" : "checkbox", name, id, value:String(i)});
+      const a = st.answers[q.n];
+      if (q.type === "single" && a === i) input.checked = true;
+      if (q.type === "multi" && Array.isArray(a) && a.includes(i)) input.checked = true;
+      input.addEventListener("change", () => {
+        if (q.type === "single") st.answers[q.n] = i;
+        else {
+          const sel = $$("input:checked", box).map(x => Number(x.value));
+          st.answers[q.n] = sel;
+          if (q.max) $$("input", box).forEach(x => { x.disabled = !x.checked && sel.length >= q.max; });
+        }
+        const err = $(".err", root); if (err) err.hidden = true;
+      });
+      box.append(el("label", {class:"opt", for:id}, input, el("span", {text:o})));
+    });
+    if (q.max) {
+      const sel = Array.isArray(st.answers[q.n]) ? st.answers[q.n] : [];
+      $$("input", box).forEach(x => { x.disabled = !x.checked && sel.length >= q.max; });
+    }
+    return box;
+  }
+  function renderPlay(){
+    const card = el("div", {class:"qcard"});
+    const head = el("div", {class:"qhead " + def.color});
+    const prog = el("div", {class:"progress"}, el("i"));
+    const body = el("div", {class:"qbody"});
+    card.append(head, prog, body);
+    if (st.pos === "intro") {
+      head.append(el("span", {text:"Questionnaire " + def.short.toLowerCase()}), el("span", {text:total + " questions"}));
+      body.append(el("h3", {text:def.title}));
+      const it = el("div", {class:"intro-text"});
+      def.intro.forEach(p => it.append(el("p", {text:p})));
+      body.append(it, el("div", {class:"qactions"}, el("span"), el("button", {type:"button", class:"btn primary", onclick:() => { st.pos = 1; st.history = []; render(); }}, "Commencer")));
+    } else if (st.pos === "end") {
+      $("i", prog).style.width = "100%";
+      head.append(el("span", {text:"Fin du questionnaire"}), el("span", {text:st.seen.size + " questions vues sur " + total}));
+      body.append(el("h3", {text:"Merci !"}), el("p", {text:st.endMsg || def.end}));
+      body.append(el("div", {class:"qactions"},
+        el("div", {class:"left"}, el("button", {type:"button", class:"btn", onclick:() => { if (st.history.length) { st.pos = st.history.pop(); st.endMsg = null; render(); } }}, "Revenir")),
+        el("div", {class:"right"}, el("button", {type:"button", class:"btn primary", onclick:() => { st.pos = "intro"; st.answers = {}; st.history = []; st.seen = new Set(); st.endMsg = null; render(); }}, "Recommencer"))));
+    } else {
+      const q = byN.get(st.pos);
+      st.seen.add(q.n);
+      $("i", prog).style.width = Math.round((q.n - 1) / total * 100) + "%";
+      head.append(el("span", {text:(q.secLabel || "")}), el("span", {text:"Question " + q.n + " sur " + total}));
+      if (q.cond) body.append(el("div", {class:"cond", text:q.cond}));
+      body.append(el("h3", {text:q.text + (q.required ? " *" : "")}));
+      body.append(el("div", {class:"help", text:typeLabel(q) + (q.optional ? " · facultatif" : "")}));
+      if (q.help) body.append(el("div", {class:"help", text:q.help}));
+      if (q.type === "text") {
+        const ta = el("textarea", {class:"answer", id:def.key + "-q" + q.n + "-t", "aria-label":q.text});
+        ta.value = st.answers[q.n] || "";
+        ta.addEventListener("input", () => { st.answers[q.n] = ta.value; });
+        body.append(ta);
+      } else if (q.type === "short") {
+        const inp = el("input", {class:"answer", id:def.key + "-q" + q.n + "-t", inputmode:"numeric", autocomplete:"off", "aria-label":q.text});
+        inp.value = st.answers[q.n] || "";
+        inp.addEventListener("input", () => { st.answers[q.n] = inp.value; });
+        body.append(inp);
+      } else body.append(renderOptions(q));
+      if (q.note) body.append(el("div", {class:"branch", text:"Branchement : " + q.note}));
+      const err = el("div", {class:"err", text:"Cette question est obligatoire.", hidden:true});
+      body.append(err);
+      body.append(el("div", {class:"qactions"},
+        el("div", {class:"left"},
+          el("button", {type:"button", class:"btn", onclick:() => { if (st.history.length) { st.pos = st.history.pop(); render(); } else { st.pos = "intro"; render(); } }}, "Précédent"),
+          commentBtn(q)),
+        el("div", {class:"right"},
+          el("button", {type:"button", class:"btn primary", onclick:() => {
+            if (q.required && isEmpty(q)) { err.hidden = false; return; }
+            st.history.push(q.n); st.endMsg = null; st.pos = nextOf(q); render();
+          }}, "Suivant"))));
+    }
+    const side = el("div", {class:"side-note"});
+    const c = el("div", {class:"card"}, el("h3", {text:"À savoir"}));
+    const ul = el("ul");
+    def.side.forEach(s => ul.append(el("li", {text:s})));
+    c.append(ul);
+    side.append(c);
+    return el("div", {class:"player"}, card, side);
+  }
+  function renderAll(){
+    const box = el("div", {class:"overview"});
+    def.questions.forEach(q => {
+      if (q.sec) box.append(el("div", {class:"ov-sec", text:q.sec}));
+      const main = el("div", null, el("div", {class:"ov-q", text:(q.cond ? "(" + q.cond + ") " : "") + q.text}));
+      const meta = el("div", {class:"ov-meta"}, el("span", {class:"tag", text:typeLabel(q)}));
+      if (q.required) meta.append(el("span", {class:"tag", text:"Obligatoire"}));
+      if (q.optional) meta.append(el("span", {class:"tag", text:"Facultatif"}));
+      if (q.note) meta.append(el("span", {class:"branch", text:q.note}));
+      main.append(meta);
+      if (q.opts) {
+        const os = el("div", {class:"ov-opts"});
+        q.opts.forEach(o => os.append(el("span", {class:"tag", text:o})));
+        main.append(os);
+      }
+      box.append(el("div", {class:"ov-item"}, el("div", {class:"ov-n", text:"Q" + q.n}), main, commentBtn(q)));
+    });
+    return box;
+  }
+  let lastSec = "";
+  def.questions.forEach(q => { if (q.sec) lastSec = q.sec; q.secLabel = lastSec; });
+  function render(){
+    root.replaceChildren(st.mode === "play" ? renderPlay() : renderAll());
+  }
+  render();
+}
+$$(".slide").filter(s => $(".survey", s)).forEach(makeSurvey);
+
+/* ---------- Carnet de notes et décisions ---------- */
+const notes = {db:null, user:null, me:null, owner:false, list:[], filter:"slide", target:null, targetLabel:null, local:false};
+const decisions = {map:{}};
+const use = name => (window.claude && typeof window.claude.use === "function") ? window.claude.use(name).catch(() => null) : Promise.resolve(null);
+const fmt = new Intl.DateTimeFormat("fr-FR", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"});
+const slideTitle = id => { const s = slides.find(x => x.id === id); return s ? s.dataset.title : id; };
+const slideIndex = id => slides.findIndex(x => x.id === id);
+
+function setStatus(t){ $("#notes-status").textContent = t; }
+function openNotes(opts){
+  document.body.classList.add("notes-open");
+  $("#notes").hidden = false;
+  $("#notes-toggle").setAttribute("aria-expanded", "true");
+  if (opts && opts.target) { notes.target = opts.target; notes.targetLabel = opts.label; }
+  renderNotes();
+  setTimeout(() => { try { $("#note-text").focus(); } catch (e) {} }, 30);
+}
+function closeNotes(){
+  document.body.classList.remove("notes-open");
+  $("#notes").hidden = true;
+  $("#notes-toggle").setAttribute("aria-expanded", "false");
+}
+$("#notes-toggle").addEventListener("click", () => { if ($("#notes").hidden) openNotes(); else closeNotes(); });
+$("#notes-close").addEventListener("click", closeNotes);
+$("#ctx-clear").addEventListener("click", () => { notes.target = null; notes.targetLabel = null; renderNotes(); });
+$("#f-slide").addEventListener("click", () => { notes.filter = "slide"; renderNotes(); });
+$("#f-all").addEventListener("click", () => { notes.filter = "all"; renderNotes(); });
+
+let renderToken = 0;
+async function profilesFor(ids){
+  if (!notes.user || !ids.length) return {};
+  try { return await notes.user.profiles(ids); } catch (e) { return {}; }
+}
+function noteContext(n){ return n.targetLabel || slideTitle(n.slide); }
+function noteNode(n, ps, compact){
+  const author = n.author ? ((ps[n.author] && ps[n.author].name) || "Un participant") : "Un participant";
+  let when = "";
+  try { when = fmt.format(new Date(n.at)); } catch (e) {}
+  const box = el("div", {class:"note" + (n.done ? " done" : "")});
+  box.append(el("div", {class:"meta"}, el("span", {class:"author", text:author}), el("span", {text:when}), n.done ? el("span", {class:"tag", text:"Traité"}) : null));
+  if (!compact || n.targetLabel) box.append(el("div", {class:"ctx", text:noteContext(n)}));
+  box.append(el("div", {class:"text", text:n.text}));
+  if (!compact) {
+    const acts = el("div", {class:"acts"});
+    acts.append(el("button", {type:"button", class:"btn small", onclick:() => toggleDone(n)}, n.done ? "Rouvrir" : "Marquer traité"));
+    if (notes.local || notes.owner || (n.author && n.author === notes.me)) {
+      const del = el("button", {type:"button", class:"btn small"}, "Supprimer");
+      let armed = false;
+      del.addEventListener("click", () => {
+        if (!armed) { armed = true; del.textContent = "Confirmer la suppression"; setTimeout(() => { armed = false; del.textContent = "Supprimer"; }, 4000); return; }
+        removeNote(n);
+      });
+      acts.append(del);
+    }
+    box.append(acts);
+  }
+  return box;
+}
+async function renderNotes(){
+  const token = ++renderToken;
+  const slideId = slides[current].id;
+  const shown = notes.filter === "all" ? notes.list : notes.list.filter(n => n.slide === slideId);
+  const ids = Array.from(new Set(notes.list.map(n => n.author).filter(Boolean)));
+  const ps = await profilesFor(ids);
+  if (token !== renderToken) return;
+  $("#f-slide").setAttribute("aria-pressed", notes.filter === "slide" ? "true" : "false");
+  $("#f-all").setAttribute("aria-pressed", notes.filter === "all" ? "true" : "false");
+  const list = $("#notes-list");
+  list.replaceChildren();
+  if (!shown.length) list.append(el("p", {class:"empty", text: notes.filter === "all" ? "Aucune note pour l'instant." : "Aucune note sur cette diapositive. Écrivez la première ci-dessous."}));
+  shown.forEach(n => list.append(noteNode(n, ps, false)));
+  $("#ctx-label").textContent = notes.target ? notes.targetLabel : "Diapositive : " + slides[current].dataset.title;
+  $("#ctx-clear").hidden = !notes.target;
+  const here = notes.list.filter(n => n.slide === slideId).length;
+  $("#notes-count").textContent = String(here);
+  renderRecap(ps);
+}
+function renderRecap(ps){
+  const box = $("#recap-list");
+  box.replaceChildren();
+  if (!notes.list.length) { box.append(el("p", {class:"empty", text:"Aucune note n'a encore été prise."})); return; }
+  const groups = new Map();
+  notes.list.forEach(n => { if (!groups.has(n.slide)) groups.set(n.slide, []); groups.get(n.slide).push(n); });
+  Array.from(groups.keys()).sort((a, b) => slideIndex(a) - slideIndex(b)).forEach(sid => {
+    const g = el("div", {class:"recap-group card"}, el("h3", {text:slideTitle(sid)}));
+    const inner = el("div", {class:"grid"});
+    groups.get(sid).forEach(n => inner.append(noteNode(n, ps, true)));
+    g.append(inner);
+    box.append(g);
+  });
+}
+async function addNote(text){
+  const doc = {slide:slides[current].id, target:notes.target, targetLabel:notes.targetLabel, text, author:notes.me, at:new Date().toISOString(), done:false};
+  if (notes.db) {
+    await notes.db.collection("notes").add(doc);
+  } else {
+    doc.id = "local-" + Date.now();
+    notes.list.push(doc);
+    saveLocal();
+    renderNotes();
+  }
+}
+async function toggleDone(n){
+  if (notes.db) { try { await notes.db.doc("notes/" + n.id).update({done:!n.done}); } catch (e) { setStatus("La note n'a pas pu être modifiée. Réessayez."); } }
+  else { n.done = !n.done; saveLocal(); renderNotes(); }
+}
+async function removeNote(n){
+  if (notes.db) { try { await notes.db.doc("notes/" + n.id).delete(); } catch (e) { setStatus("La note n'a pas pu être supprimée. Réessayez."); } }
+  else { notes.list = notes.list.filter(x => x !== n); saveLocal(); renderNotes(); }
+}
+function saveLocal(){ try { localStorage.setItem("codir-notes", JSON.stringify(notes.list)); localStorage.setItem("codir-decisions", JSON.stringify(decisions.map)); } catch (e) {} }
+function loadLocal(){
+  try { const a = JSON.parse(localStorage.getItem("codir-notes") || "[]"); if (Array.isArray(a)) notes.list = a; } catch (e) {}
+  try { const d = JSON.parse(localStorage.getItem("codir-decisions") || "{}"); if (d && typeof d === "object") decisions.map = d; } catch (e) {}
+}
+$("#composer").addEventListener("submit", async e => {
+  e.preventDefault();
+  const ta = $("#note-text");
+  const text = ta.value.trim();
+  if (!text) { ta.focus(); return; }
+  const btn = $("#note-add");
+  btn.disabled = true;
+  try {
+    await addNote(text);
+    ta.value = "";
+    notes.target = null; notes.targetLabel = null;
+    if (notes.db) setStatus("Note enregistrée, visible par tous les participants.");
+  } catch (err) {
+    setStatus(err && err.code === "quota_exceeded" ? "Le carnet est plein : supprimez des notes traitées." : "La note n'a pas été enregistrée. Réessayez.");
+  } finally { btn.disabled = false; renderNotes(); }
+});
+
+/* Décisions */
+async function renderDecisions(){
+  const box = $("#decision-list");
+  const ids = Array.from(new Set(Object.values(decisions.map).map(d => d && d.by).filter(Boolean)));
+  const ps = await profilesFor(ids);
+  box.replaceChildren();
+  DECISIONS.forEach(d => {
+    const cur = decisions.map[d.id] || {};
+    const left = el("div", null, el("h3", {text:d.text}));
+    if (cur.status) {
+      const who = cur.by ? ((ps[cur.by] && ps[cur.by].name) || "un participant") : "un participant";
+      let when = ""; try { when = fmt.format(new Date(cur.at)); } catch (e) {}
+      left.append(el("div", {class:"by", text:"Statut fixé par " + who + (when ? ", " + when : "")}));
+    }
+    const sbox = el("div", {class:"status", role:"group", "aria-label":"Statut : " + d.text});
+    STATUSES.forEach(([s, label]) => {
+      sbox.append(el("button", {type:"button", "data-s":s, "aria-pressed": cur.status === s ? "true" : "false", onclick:() => setDecision(d.id, s)}, label));
+    });
+    sbox.append(el("button", {type:"button", onclick:() => openNotes({target:"decision:" + d.id, label:"Décision · " + d.text})}, "Commenter"));
+    box.append(el("div", {class:"decision"}, left, sbox));
+  });
+}
+async function setDecision(id, status){
+  const doc = {status, by:notes.me, at:new Date().toISOString()};
+  if (notes.db) {
+    try { await notes.db.doc("decisions/" + id).set(doc); } catch (e) { setStatus("Le statut n'a pas été enregistré. Réessayez."); }
+  } else { decisions.map[id] = doc; saveLocal(); renderDecisions(); }
+}
+
+/* Copier toutes les notes */
+$("#copy-all").addEventListener("click", async () => {
+  const ids = Array.from(new Set(notes.list.map(n => n.author).filter(Boolean)));
+  const ps = await profilesFor(ids);
+  const lines = ["Notes de séance · CODIR enquêtes aidants 13", ""];
+  const sorted = notes.list.slice().sort((a, b) => slideIndex(a.slide) - slideIndex(b.slide) || String(a.at).localeCompare(String(b.at)));
+  sorted.forEach(n => {
+    let when = ""; try { when = fmt.format(new Date(n.at)); } catch (e) {}
+    const who = n.author ? ((ps[n.author] && ps[n.author].name) || "Un participant") : "Un participant";
+    lines.push("[" + noteContext(n) + "] " + who + ", " + when + (n.done ? " (traité)" : ""));
+    lines.push(n.text, "");
+  });
+  DECISIONS.forEach(d => { const c = decisions.map[d.id]; lines.push("Décision : " + d.text + " → " + (c && c.status ? STATUSES.find(s => s[0] === c.status)[1] : "sans statut")); });
+  const text = lines.join("\n");
+  const btn = $("#copy-all");
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.lastChild.textContent = " Notes copiées";
+    setTimeout(() => { btn.lastChild.textContent = " Copier toutes les notes"; }, 2500);
+  } catch (e) {
+    $("#copy-zone").hidden = false;
+    const ta = $("#copy-text");
+    ta.value = text; ta.focus(); ta.select();
+  }
+});
+
+/* ---------- Guide d'entretien (personnes aidées) ---------- */
+const GUIDE = [
+  {k:"ouverture", n:"Ouverture", q:"Se présenter et demander l'accord",
+    say:"« Je travaille avec l'équipe d'Amicial. Nous voulons mieux comprendre ce qui compte pour les personnes que nous accompagnons. Il n'y a pas de bonne ou de mauvaise réponse. Êtes-vous d'accord pour qu'on en parle un moment ? »",
+    seek:"Mettre en confiance et obtenir un accord clair."},
+  {k:"q1", n:"Q1", q:"« Racontez-moi une journée habituelle. »",
+    rel:"Qu'est-ce qui est le plus facile ? Le plus difficile ? À quels moments êtes-vous seul(e) ?",
+    seek:"Les moments critiques (soirs, nuits, week-ends) et l'isolement."},
+  {k:"q2", n:"Q2", q:"« Qu'est-ce qui vous aide le plus à rester chez vous ? »",
+    rel:"Qui vient vous voir ? Qu'est-ce qui compte dans la façon dont on vous aide ?",
+    seek:"Ce qui plaît dans l'accompagnement et les autres soutiens."},
+  {k:"q3", n:"Q3", q:"« Qu'est-ce qui vous manque aujourd'hui ? Qu'aimeriez-vous pouvoir refaire ? »",
+    rel:"Sortir, voir quelqu'un, une activité, les papiers, le téléphone ou la tablette…",
+    seek:"Les besoins non couverts et les envies."},
+  {k:"q4", n:"Q4", q:"« Vous arrive-t-il de vous inquiéter pour les proches qui vous aident ? »",
+    rel:"« S'ils s'absentaient quelques jours, qui aimeriez-vous avoir près de vous ? »",
+    seek:"Le répit et le relayage, vus par la personne aidée."},
+  {k:"q5", n:"Q5", q:"« Qu'aimez-vous faire avec la personne qui vient vous aider ? »",
+    rel:"Y a-t-il quelque chose que vous aimeriez faire en plus avec elle ?",
+    seek:"Les savoir-faire appréciés, en écho à l'enquête salariés. Jamais une évaluation de l'intervenante."},
+  {k:"q6", n:"Q6", q:"« Si vous aviez une baguette magique, que changeriez-vous dans votre quotidien ? »",
+    seek:"L'attente principale, en une phrase."},
+  {k:"cloture", n:"Clôture", q:"Remercier et ouvrir",
+    say:"« Y a-t-il quelque chose d'important dont nous n'avons pas parlé ? »",
+    seek:"Rappeler qu'un besoin urgent peut être transmis à la coordinatrice, avec l'accord de la personne. Aucune proposition commerciale."}
+];
+const chevron = () => {
+  const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("class", "chev"); s.setAttribute("aria-hidden", "true");
+  s.setAttribute("fill", "none"); s.setAttribute("stroke", "currentColor"); s.setAttribute("stroke-width", "2");
+  s.setAttribute("stroke-linecap", "round"); s.setAttribute("stroke-linejoin", "round");
+  const p = document.createElementNS("http://www.w3.org/2000/svg", "path"); p.setAttribute("d", "M6 9l6 6 6-6"); s.append(p);
+  return s;
+};
+const guideBox = $("#guide");
+GUIDE.forEach(g => {
+  const body = el("div", {class:"gbody"});
+  if (g.say) body.append(el("div", null, el("span", {class:"lab", text:"À dire"}), el("p", {text:g.say})));
+  if (g.rel) body.append(el("div", null, el("span", {class:"lab", text:"Relances"}), el("p", {text:g.rel})));
+  body.append(el("div", null, el("span", {class:"lab", text:"Ce qu'on cherche"}), el("p", {text:g.seek})));
+  body.append(el("button", {type:"button", class:"btn small", onclick:() => openNotes({target:"guide:" + g.k, label:"Guide d'entretien · " + g.n})}, "Commenter"));
+  guideBox.append(el("details", null,
+    el("summary", null, el("span", {class:"gn", text:g.n}), el("span", {class:"gq", text:g.q}), chevron()),
+    body));
+});
+
+/* ---------- Profil recherché ---------- */
+const PROFILE = [
+  {k:"secteur", name:"Connaissance du secteur et des dispositifs", w:20, c:"#3E5A7F", ink:"#FFFFFF",
+    d:"APA, PCH, caisses de retraite, crédit d'impôt, relayage, acteurs de la coordination. Savoir guider une famille dans les aides, c'est déjà gagner sa confiance.",
+    how:"Lui demander d'expliquer à une famille la différence entre l'APA et la PCH, et qui finance quoi."},
+  {k:"credibilite", name:"Crédibilité et réseau auprès des prescripteurs", w:25, c:"#5C7FA8", ink:"#FFFFFF",
+    d:"Être reçu comme un pair par les assistantes sociales d'hôpital, les médecins, les CCAS et les plateformes de répit, qui orientent les familles. Un réseau à Marseille ou à Arles est un vrai plus.",
+    how:"Mise en situation : présenter le relayage à une assistante sociale d'hôpital, jouée par une coordinatrice."},
+  {k:"ecoute", name:"Écoute et conduite d'entretien", w:10, c:"#C7E0E4", ink:"#21414B",
+    d:"Mener un entretien sans orienter les réponses, avec des personnes âgées, fatiguées ou désorientées. C'est la première mission du poste.",
+    how:"Lui faire reformuler une situation familiale complexe racontée par un coordinateur."},
+  {k:"conviction", name:"Aisance relationnelle et force de conviction", w:20, c:"#F29559", ink:"#2B1A0D",
+    d:"Aller vers les gens, ouvrir des portes, relancer sans lasser, parler du prix sans gêne. Le bagou, au service de la confiance.",
+    how:"Lui demander comment il ou elle a obtenu un rendez-vous difficile, puis observer la relance pendant la mise en situation."},
+  {k:"equipe", name:"Travail d'équipe et construction d'offre", w:10, c:"#568259", ink:"#FFFFFF",
+    d:"Transformer les besoins repérés en offres réalistes avec les coordinateurs et les équipes : planning, faisabilité, prix. Ne jamais vendre ce que le terrain ne peut pas tenir.",
+    how:"Un exemple de projet monté avec des équipes de terrain, et ce qui a coincé."},
+  {k:"resultats", name:"Sens du développement et des résultats", w:15, c:"#E3DBC8", ink:"#3B3324",
+    d:"Suivre ses contacts, se fixer des objectifs chiffrés et en rendre compte. Le poste doit financer son coût en heures nouvelles.",
+    how:"Comment il ou elle suit ses contacts ; un objectif atteint ou manqué, et pourquoi."}
+];
+const SVGNS = "http://www.w3.org/2000/svg";
+const svgEl = (tag, attrs) => { const n = document.createElementNS(SVGNS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+const FIG = {w:220, h:420, top:16, bottom:414, head:{cx:110, cy:62, r:46},
+  body:"M 88 114 Q 110 108 132 114 L 136 128 Q 190 136 199 188 L 204 404 Q 204 414 194 414 L 26 414 Q 16 414 16 404 L 21 188 Q 30 136 84 128 Z"};
+
+/* Surface de la silhouette ligne par ligne : chaque part est proportionnelle en surface, pas seulement en hauteur. */
+function rowAreas(){
+  try {
+    const cv = document.createElement("canvas"); cv.width = FIG.w; cv.height = FIG.h;
+    const ctx = cv.getContext("2d"); if (!ctx) return null;
+    ctx.fillStyle = "#000";
+    ctx.fill(new Path2D(FIG.body));
+    ctx.beginPath(); ctx.arc(FIG.head.cx, FIG.head.cy, FIG.head.r, 0, Math.PI * 2); ctx.fill();
+    const data = ctx.getImageData(0, 0, FIG.w, FIG.h).data;
+    const rows = new Array(FIG.h).fill(0);
+    for (let y = 0; y < FIG.h; y++) { let s = 0; for (let x = 0; x < FIG.w; x++) s += data[(y * FIG.w + x) * 4 + 3]; rows[y] = s / 255; }
+    return rows.some(v => v > 0) ? rows : null;
+  } catch (e) { return null; }
+}
+function cutoffs(){
+  const rows = rowAreas();
+  const total = PROFILE.reduce((a, p) => a + p.w, 0);
+  if (!rows) {
+    let y = FIG.top; const span = FIG.bottom - FIG.top;
+    return PROFILE.map(p => { const y0 = y; y += span * p.w / total; return {y0, y1:y, ly:(y0 + y) / 2}; });
+  }
+  const cum = [0]; rows.forEach((v, i) => cum.push(cum[i] + v));
+  const area = cum[cum.length - 1];
+  const yAt = target => {
+    for (let y = 0; y < rows.length; y++) if (cum[y + 1] >= target) { const f = rows[y] ? (target - cum[y]) / rows[y] : 0; return y + f; }
+    return rows.length;
+  };
+  let acc = 0;
+  return PROFILE.map((p, i) => {
+    const a0 = acc; acc += area * p.w / total;
+    return {y0: i === 0 ? 0 : yAt(a0), y1: i === PROFILE.length - 1 ? FIG.h : yAt(acc), ly: yAt((a0 + acc) / 2)};
+  });
+}
+const prof = {sel:null, bands:[], btns:[], lbls:[]};
+(function buildFigure(){
+  const svg = svgEl("svg", {viewBox:"0 0 " + FIG.w + " " + FIG.h, role:"img", "aria-label":"Silhouette remplie selon le poids de chaque compétence dans le poste"});
+  const defs = svgEl("defs", {});
+  const clip = svgEl("clipPath", {id:"sil-clip"});
+  clip.append(svgEl("circle", FIG.head), svgEl("path", {d:FIG.body}));
+  defs.append(clip); svg.append(defs);
+  const g = svgEl("g", {"clip-path":"url(#sil-clip)"});
+  const cuts = cutoffs();
+  PROFILE.forEach((p, i) => {
+    const c = cuts[i];
+    const r = svgEl("rect", {x:0, y:c.y0.toFixed(2), width:FIG.w, height:Math.max(0, c.y1 - c.y0 + 0.6).toFixed(2), fill:p.c, class:"band"});
+    r.addEventListener("pointerenter", () => select(i));
+    r.addEventListener("click", () => { select(i); revealDetail(); });
+    prof.bands.push(r); g.append(r);
+  });
+  svg.append(g);
+  PROFILE.forEach((p, i) => {
+    const t = svgEl("text", {x:FIG.head.cx, y:(cuts[i].ly + 5).toFixed(1), "text-anchor":"middle", fill:p.ink, class:"band-lbl"});
+    t.textContent = p.w + " %";
+    prof.lbls.push(t); svg.append(t);
+  });
+  svg.append(svgEl("circle", Object.assign({class:"silhouette-line"}, FIG.head)), svgEl("path", {d:FIG.body, class:"silhouette-line"}));
+  $("#figure").append(svg);
+
+  PROFILE.forEach((p, i) => {
+    const b = el("button", {type:"button", "aria-pressed":"false",
+      onclick:() => { select(i); revealDetail(); }, onmouseenter:() => select(i), onfocus:() => select(i)},
+      el("span", {class:"sw", style:"background:" + p.c}), el("span", {text:p.name}), el("span", {class:"pc", text:p.w + " %"}));
+    prof.btns.push(b); $("#legend").append(b);
+  });
+})();
+/* Sur téléphone, le détail est sous la légende : on l'amène à l'écran après un toucher. */
+function revealDetail(){
+  try {
+    if (!window.matchMedia("(max-width:620px)").matches) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("#detail").scrollIntoView({block:"nearest", behavior: reduce ? "auto" : "smooth"});
+  } catch (e) {}
+}
+/* Survoler ou toucher une part la sélectionne ; elle reste affichée jusqu'à la suivante. */
+function select(i){ if (prof.sel === i) return; prof.sel = i; paintProfile(); }
+function paintProfile(){
+  const i = prof.sel;
+  $("#figure").classList.toggle("has-sel", i != null);
+  prof.bands.forEach((b, k) => b.classList.toggle("on", k === i));
+  prof.lbls.forEach((t, k) => t.classList.toggle("on", k === i));
+  prof.btns.forEach((b, k) => b.setAttribute("aria-pressed", k === prof.sel ? "true" : "false"));
+  const box = $("#detail");
+  box.replaceChildren();
+  if (i == null) {
+    const core = PROFILE[0].w + PROFILE[1].w;
+    box.append(
+      el("span", {class:"kicker", text:"Lecture d'ensemble"}),
+      el("div", {class:"big"}, el("span", {class:"pc-big", text:core + " %"})),
+      el("h3", {text:"pour la connaissance du secteur et la crédibilité auprès des prescripteurs"}),
+      el("p", {text:"Les familles arrivent par les prescripteurs, et les prescripteurs orientent vers quelqu'un qu'ils reconnaissent. L'aisance commerciale compte, elle s'appuie sur ce socle."}),
+      el("p", {class:"small muted", text:"Survolez ou touchez une partie de la silhouette pour le détail de chaque compétence."}));
+    return;
+  }
+  const p = PROFILE[i];
+  box.append(
+    el("span", {class:"kicker", text:"Compétence " + (i + 1) + " sur " + PROFILE.length}),
+    el("div", {class:"big"}, el("span", {class:"pc-big", text:p.w + " %"}), el("span", {class:"muted small", text:"du poste"})),
+    el("h3", {text:p.name}),
+    el("p", {text:p.d}),
+    el("div", {class:"how"}, el("b", {text:"Comment le repérer"}), el("span", {text:p.how})),
+    el("div", {class:"chips"},
+      el("button", {type:"button", class:"btn small", onclick:() => openNotes({target:"profil:" + p.k, label:"Profil · " + p.name})}, "Commenter cette compétence"),
+      el("button", {type:"button", class:"btn small", onclick:() => { prof.sel = null; paintProfile(); }}, "Vue d'ensemble")));
+}
+paintProfile();
+$("#to-entretiens").addEventListener("click", () => go(slides.findIndex(s => s.id === "entretiens-aides")));
+
+/* Connexion aux capacités */
+renderNotes();
+renderDecisions();
+(async () => {
+  const [db, user] = await Promise.all([use("db"), use("user")]);
+  notes.user = user;
+  if (user) {
+    try { notes.me = await user.id(); } catch (e) { notes.me = null; }
+    try { notes.owner = await user.isOwner(); } catch (e) { notes.owner = false; }
+  }
+  if (!db) {
+    notes.local = true;
+    loadLocal();
+    setStatus("Notes gardées seulement dans ce navigateur.");
+    renderNotes(); renderDecisions();
+    return;
+  }
+  notes.db = db;
+  setStatus("Carnet partagé : les notes sont visibles par tous les participants.");
+  db.collection("notes").orderBy("at", "asc").onSnapshot(snap => {
+    notes.list = snap.docs.map(d => Object.assign({id:d.id}, d.data()));
+    renderNotes();
+  }, () => setStatus("Le carnet ne se met plus à jour. Rechargez la page."));
+  db.collection("decisions").onSnapshot(snap => {
+    const m = {};
+    snap.docs.forEach(d => { m[d.id] = d.data(); });
+    decisions.map = m;
+    renderDecisions();
+  }, () => setStatus("Les décisions ne se mettent plus à jour. Rechargez la page."));
+})();
+
+go(indexFromHash());
+})();
+</script>
+</body>
+</html>
